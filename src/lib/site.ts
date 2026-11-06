@@ -466,71 +466,49 @@ export const crew = {
   ],
 };
 /**
- * Services section (#services — the "Services" menu link scrolls here): the service names float
- * around the section and drift away from the cursor. Click one to open the contact form with it selected.
- *   style — "solid" | "outline" | "cream" | "blue" | "glass" | "glow"
- *   size  — "xl" | "lg" | "md"
- *   x, y  — starting position in % of the section (also the layout for visitors who prefer no motion)
+ * Services section (#services — the "Services" menu link scrolls here): an editorial index.
+ * Click a service to open the contact form with it selected.
+ *   line — one short line shown beside the name (edit freely).
  *   formValue — must match an option in leadOptions.services
  */
 export const serviceList = {
   eyebrow: "Services",
-  hint: "Tap a service to talk to us about it",
+  title: "Services, crafted for [growth]",
+  body: "Seven disciplines under one roof — planned together, measured together and delivered by one team that knows your brand.",
   items: [
     {
-      title: "Performance Ads",
-      style: "solid",
-      size: "xl",
-      x: 6,
-      y: 10,
-      formValue: "Paid Ads",
-    },
-    {
       title: "Digital Marketing",
-      style: "cream",
-      size: "lg",
-      x: 52,
-      y: 6,
+      line: "One plan across search, social and ads",
       formValue: "Full-funnel growth",
     },
     {
+      title: "Performance Ads",
+      line: "Campaigns measured by return, not reach",
+      formValue: "Paid Ads",
+    },
+    {
       title: "Meta Ads",
-      style: "blue",
-      size: "lg",
-      x: 62,
-      y: 34,
+      line: "Facebook and Instagram campaigns that convert",
       formValue: "Paid Ads",
     },
     {
       title: "Google Ads",
-      style: "outline",
-      size: "xl",
-      x: 4,
-      y: 40,
+      line: "Search, display and YouTube, built to convert",
       formValue: "Paid Ads",
     },
     {
       title: "Creative Content",
-      style: "glow",
-      size: "lg",
-      x: 40,
-      y: 58,
+      line: "Reels, posts and stories with a purpose",
       formValue: "Creative Content",
     },
     {
       title: "Website Development",
-      style: "glass",
-      size: "md",
-      x: 8,
-      y: 74,
+      line: "Fast, mobile-first websites and landing pages",
       formValue: "Website Development",
     },
     {
       title: "Political PR",
-      style: "solid",
-      size: "lg",
-      x: 64,
-      y: 82,
+      line: "Message strategy, media and public outreach",
       formValue: "Political PR",
     },
   ],
