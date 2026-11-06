@@ -6,7 +6,13 @@ type FooterLink = { label: string; href: string; external?: boolean };
 
 const linkClass = "text-[15px] text-mist transition-colors hover:text-white";
 
-function FooterAnchor({ link, className = linkClass }: { link: FooterLink; className?: string }) {
+function FooterAnchor({
+  link,
+  className = linkClass,
+}: {
+  link: FooterLink;
+  className?: string;
+}) {
   if (link.href === "/privacy")
     return (
       <Link href={link.href} className={className}>
@@ -14,7 +20,11 @@ function FooterAnchor({ link, className = linkClass }: { link: FooterLink; class
       </Link>
     );
   return (
-    <a href={link.href} {...(link.external && { target: "_blank", rel: "noopener noreferrer" })} className={className}>
+    <a
+      href={link.href}
+      {...(link.external && { target: "_blank", rel: "noopener noreferrer" })}
+      className={className}
+    >
       {link.label}
     </a>
   );
@@ -40,6 +50,7 @@ export function Footer() {
         { label: "SEO", href: "/#services" },
         { label: "Paid Ads", href: "/#services" },
         { label: "Creative Content", href: "/#services" },
+        { label: "Political Campaigns", href: "/political-campaigns" },
       ],
     },
     {
@@ -51,7 +62,13 @@ export function Footer() {
     },
     {
       title: "Contact",
-      links: [...contact.phones.map((p) => ({ label: p.display, href: `tel:${p.tel}` })), { label: "Email us", href: `mailto:${contact.email}` }],
+      links: [
+        ...contact.phones.map((p) => ({
+          label: p.display,
+          href: `tel:${p.tel}`,
+        })),
+        { label: "Email us", href: `mailto:${contact.email}` },
+      ],
     },
   ];
 
@@ -61,9 +78,16 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.85fr)] lg:gap-16">
           {/* Brand block */}
           <div className="flex max-w-[330px] flex-col gap-5">
-            <Image src="/brand/inspire-media-logo-white.svg" alt={site.name} width={359} height={226} className="h-12 w-auto self-start" />
+            <Image
+              src="/brand/inspire-media-logo-white.svg"
+              alt={site.name}
+              width={359}
+              height={226}
+              className="h-12 w-auto self-start"
+            />
             <p className="text-[16px] leading-relaxed text-ice/90">
-              Performance marketing for Brands &amp; D2C businesses. We don&apos;t just market your brand — we grow it.
+              Performance marketing for Brands &amp; D2C businesses. We
+              don&apos;t just market your brand — we grow it.
             </p>
             <address className="text-[14px] not-italic leading-relaxed text-muted">
               <a
@@ -72,7 +96,8 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-white"
               >
-                {contact.address.line1}, {contact.address.city} – {contact.address.postalCode} ↗
+                {contact.address.line1}, {contact.address.city} –{" "}
+                {contact.address.postalCode} ↗
               </a>
             </address>
             <iframe
@@ -85,10 +110,15 @@ export function Footer() {
           </div>
 
           {/* Link columns */}
-          <nav aria-label="Footer" className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
+          <nav
+            aria-label="Footer"
+            className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4"
+          >
             {columns.map((col) => (
               <div key={col.title} className="flex flex-col gap-5">
-                <p className="font-mono text-[11px] font-medium uppercase tracking-[0.28em] text-muted">{col.title}</p>
+                <p className="font-mono text-[11px] font-medium uppercase tracking-[0.28em] text-muted">
+                  {col.title}
+                </p>
                 <ul className="flex flex-col gap-3.5">
                   {col.links.map((l) => (
                     <li key={l.label}>
@@ -114,8 +144,18 @@ export function Footer() {
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <FooterAnchor link={{ label: "Privacy", href: "/privacy" }} className="transition-colors hover:text-white" />
-            <FooterAnchor link={{ label: "Instagram", href: contact.instagram.url, external: true }} className="transition-colors hover:text-white" />
+            <FooterAnchor
+              link={{ label: "Privacy", href: "/privacy" }}
+              className="transition-colors hover:text-white"
+            />
+            <FooterAnchor
+              link={{
+                label: "Instagram",
+                href: contact.instagram.url,
+                external: true,
+              }}
+              className="transition-colors hover:text-white"
+            />
           </div>
         </div>
       </div>

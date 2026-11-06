@@ -6,6 +6,7 @@ import { serviceList } from "@/lib/site";
 import { Reveal } from "./ui/Reveal";
 import { Hl } from "./ui/Hl";
 import { ArrowRightIcon } from "./ui/icons";
+import Link from "next/link";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -18,61 +19,37 @@ export function ServiceList() {
   const items = serviceList.items;
 
   return (
-    <section
-      id="services"
-      aria-labelledby="services-title"
-      className="relative isolate px-4 py-24 sm:px-6 lg:py-36"
-    >
-      <div
-        aria-hidden="true"
-        className="absolute right-[-12%] top-[18%] -z-10 size-[620px] rounded-full bg-[radial-gradient(closest-side,rgb(23_71_255/0.10),transparent)]"
-      />
+    <section id="services" aria-labelledby="services-title" className="relative isolate px-4 py-24 sm:px-6 lg:py-36">
+      <div aria-hidden="true" className="absolute right-[-12%] top-[18%] -z-10 size-[620px] rounded-full bg-[radial-gradient(closest-side,rgb(23_71_255/0.10),transparent)]" />
 
       <div className="mx-auto grid max-w-[1232px] gap-14 lg:grid-cols-12 lg:gap-12">
         {/* Heading */}
         <Reveal className="flex flex-col gap-6 lg:sticky lg:top-32 lg:col-span-4 lg:self-start">
           <p className="flex items-center gap-3 font-mono text-[11px] font-medium uppercase tracking-[0.28em] text-electric">
-            <span
-              aria-hidden="true"
-              className="h-px w-8 bg-gradient-to-r from-transparent to-electric"
-            />
+            <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-transparent to-electric" />
             {serviceList.eyebrow}
             <span className="text-muted">/ {pad(items.length)}</span>
           </p>
-          <h2
-            id="services-title"
-            className="text-[40px] font-medium leading-[1.06] tracking-[-0.035em] text-white sm:text-[52px]"
-          >
+          <h2 id="services-title" className="text-[40px] font-medium leading-[1.06] tracking-[-0.035em] text-white sm:text-[52px]">
             <Hl text={serviceList.title} />
           </h2>
-          <p className="max-w-sm text-[15px] leading-relaxed text-mist">
-            {serviceList.body}
-          </p>
+          <p className="max-w-sm text-[15px] leading-relaxed text-mist">{serviceList.body}</p>
         </Reveal>
 
         {/* Index */}
         <ul className="lg:col-span-8" aria-label="Our services">
           {items.map((it, i) => (
             <Reveal as="li" key={it.title} delay={i * 70} className="relative">
-              <span
-                aria-hidden="true"
-                className="svc-line absolute inset-x-0 top-0 h-px bg-white/[0.12]"
-                style={{ "--delay": `${i * 70}ms` } as CSSProperties}
-              />
+              <span aria-hidden="true" className="svc-line absolute inset-x-0 top-0 h-px bg-white/[0.12]" style={{ "--delay": `${i * 70}ms` } as CSSProperties} />
               <button
                 type="button"
                 onClick={() => prefillLead({ service: it.formValue })}
                 className="group relative flex w-full cursor-pointer items-center gap-5 overflow-hidden py-6 text-left outline-none focus-visible:bg-white/[0.03] sm:gap-8 sm:py-8"
               >
                 {/* soft cream wash that sweeps in on hover */}
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 origin-left scale-x-0 bg-[linear-gradient(90deg,rgb(232_220_196/0.07),rgb(232_220_196/0.015)_70%,transparent)] transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-x-100 group-focus-visible:scale-x-100"
-                />
+                <span aria-hidden="true" className="pointer-events-none absolute inset-0 origin-left scale-x-0 bg-[linear-gradient(90deg,rgb(232_220_196/0.07),rgb(232_220_196/0.015)_70%,transparent)] transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-x-100 group-focus-visible:scale-x-100" />
 
-                <span className="relative w-8 shrink-0 font-mono text-[12px] tracking-[0.1em] text-muted transition-colors duration-500 group-hover:text-cream">
-                  {pad(i + 1)}
-                </span>
+                <span className="relative w-8 shrink-0 font-mono text-[12px] tracking-[0.1em] text-muted transition-colors duration-500 group-hover:text-cream">{pad(i + 1)}</span>
 
                 <span className="relative flex min-w-0 flex-1 flex-col gap-1.5 lg:flex-row lg:items-baseline lg:justify-between lg:gap-8">
                   <span className="text-[26px] font-normal leading-tight tracking-[-0.03em] text-white/90 transition-[color,transform] duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:translate-x-2 group-hover:text-cream sm:text-[38px] lg:text-[46px]">
@@ -91,14 +68,30 @@ export function ServiceList() {
                 </span>
               </button>
               {i === items.length - 1 && (
-                <span
-                  aria-hidden="true"
-                  className="svc-line absolute inset-x-0 bottom-0 h-px bg-white/[0.12]"
-                  style={{ "--delay": `${(i + 1) * 70}ms` } as CSSProperties}
-                />
+                <span aria-hidden="true" className="svc-line absolute inset-x-0 bottom-0 h-px bg-white/[0.12]" style={{ "--delay": `${(i + 1) * 70}ms` } as CSSProperties} />
               )}
             </Reveal>
           ))}
+
+          {/* Separate line: opens the political campaigns landing page */}
+          <Reveal as="li" delay={items.length * 70} className="mt-10 list-none">
+            <Link
+              href={serviceList.feature.href}
+              className="group relative flex items-center gap-5 overflow-hidden rounded-[24px] border border-electric/30 bg-[linear-gradient(110deg,rgb(23_71_255/0.16),rgb(23_71_255/0.03)_60%,transparent)] px-5 py-6 outline-none transition-colors hover:border-electric/70 focus-visible:ring-2 focus-visible:ring-electric sm:gap-8 sm:px-8 sm:py-8"
+            >
+              <span className="flex min-w-0 flex-1 flex-col gap-2">
+                <span className="font-mono text-[10.5px] uppercase tracking-[0.24em] text-electric">{serviceList.feature.label}</span>
+                <span className="text-[26px] font-normal leading-tight tracking-[-0.03em] text-white transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:translate-x-2 sm:text-[38px] lg:text-[46px]">
+                  {serviceList.feature.title}
+                </span>
+                <span className="text-[13.5px] text-mist">{serviceList.feature.line}</span>
+              </span>
+              <span className="hidden shrink-0 font-mono text-[11px] uppercase tracking-[0.2em] text-ice sm:block">View page</span>
+              <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary text-white transition-transform duration-500 group-hover:translate-x-1">
+                <ArrowRightIcon size={17} />
+              </span>
+            </Link>
+          </Reveal>
         </ul>
       </div>
     </section>

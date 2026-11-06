@@ -474,7 +474,7 @@ export const crew = {
 export const serviceList = {
   eyebrow: "Services",
   title: "Services, crafted for [growth]",
-  body: "Seven disciplines under one roof — planned together, measured together and delivered by one team that knows your brand.",
+  body: "Six disciplines under one roof — planned together, measured together and delivered by one team that knows your brand.",
   items: [
     {
       title: "Digital Marketing",
@@ -506,13 +506,36 @@ export const serviceList = {
       line: "Fast, mobile-first websites and landing pages",
       formValue: "Website Development",
     },
-    {
-      title: "Political PR",
-      line: "Message strategy, media and public outreach",
-      formValue: "Political PR",
-    },
+  ],
+  /** Separate line under the list that opens its own landing page. */
+  feature: {
+    label: "Also from Inspire Media",
+    title: "Political Campaigns",
+    line: "Campaign strategy, communication and public outreach",
+    href: "/political-campaigns",
+  },
+};
+
+/**
+ * Political campaigns landing page (/political-campaigns).
+ * PLACEHOLDER CONTENT — replace each text below with the final copy when it is ready.
+ */
+export const political = {
+  metaTitle: "Political Campaigns",
+  metaDescription:
+    "Political campaign strategy, communication and public outreach by Inspire Media, Hubli.",
+  eyebrow: "Political campaigns",
+  title: "Campaigns that connect with [people]",
+  body: "Content coming soon — this page will explain how Inspire Media plans and runs political campaigns and public communication.",
+  cta: "Talk to us about your campaign",
+  sections: [
+    { title: "Campaign strategy", body: "Content coming soon." },
+    { title: "Social media management", body: "Content coming soon." },
+    { title: "Media & public relations", body: "Content coming soon." },
+    { title: "On-ground event coverage", body: "Content coming soon." },
   ],
 };
+
 /**
  * "Graphic design" strip (between the client band and "Built for brands"): a moving reel of real
  * creatives with word tiles in between. Images live in public/designs/ (900px tall, any width).
@@ -795,7 +818,7 @@ export const leadOptions = {
     "Paid Ads",
     "Creative Content",
     "Website Development",
-    "Political PR",
+    "Political Campaigns",
     "Full-funnel growth",
   ],
   industries: [
