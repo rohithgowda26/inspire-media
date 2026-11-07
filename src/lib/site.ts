@@ -648,6 +648,53 @@ export const designWork = {
     },
   ],
 };
+export const compare = {
+  eyebrow: "Why Inspire Media",
+  title: "Not another [agency].",
+  body: "Most brands have worked with an agency that posted, billed and disappeared. Here’s what working with us looks like instead.",
+  them: "Typical agency",
+  us: "Inspire Media",
+  rows: [
+    {
+      them: "Separate freelancers for ads, design and SEO",
+      us: "One team for strategy, content, ads and SEO",
+    },
+    {
+      them: "The same template for every client",
+      us: "A custom roadmap for your goals and budget",
+    },
+    {
+      them: "Posting for likes and followers",
+      us: "Content built to bring enquiries and sales",
+    },
+    {
+      them: "Reports full of jargon",
+      us: "Clear, data-driven reports — every rupee accountable",
+    },
+    {
+      them: "Set it up and forget it",
+      us: "Creatives, audiences and funnels tested and improved continuously",
+    },
+    {
+      them: "Rankings and reach as the goal",
+      us: "Growth measured by real business results",
+    },
+  ],
+  cta: "Book a free strategy call",
+};
+export const manifesto = {
+  eyebrow: "What we do, simply",
+  pairs: [
+    { from: "Views", to: "Visits" },
+    { from: "Likes", to: "Leads" },
+    { from: "Clicks", to: "Customers" },
+    { from: "Reach", to: "Revenue" },
+    { from: "Scrolls", to: "Sales" },
+    { from: "Budget", to: "Growth" },
+  ],
+  line: "Attention is easy to buy. We turn it into [business].",
+  proof: ["3x average ROAS growth", "30+ brands scaled"],
+};
 /** Frequently asked questions (answers use only facts from IM.pdf and this site — edit freely). */
 export const faq = {
   eyebrow: "FAQ",

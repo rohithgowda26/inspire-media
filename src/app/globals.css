@@ -521,3 +521,78 @@ select.field-light {
     transform: none;
   }
 }
+/* Compare: the faint background number fades in each time it changes */
+@keyframes cmp-count {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+.cmp-count {
+  animation: cmp-count 0.8s var(--ease-out-expo) both;
+}
+/* Manifesto — beam dot + progress segments */
+@keyframes beam-x {
+  from {
+    left: 0;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  to {
+    left: 100%;
+    opacity: 0;
+  }
+}
+@keyframes beam-y {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  to {
+    top: 100%;
+    opacity: 0;
+  }
+}
+.beam-dot {
+  animation: beam-y 0.9s cubic-bezier(0.6, 0, 0.3, 1) both;
+}
+@media (min-width: 768px) {
+  .beam-dot {
+    animation-name: beam-x;
+  }
+}
+@keyframes seg-fill {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+.seg-fill {
+  animation: seg-fill linear both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .beam-dot,
+  .seg-fill {
+    animation: none;
+  }
+  .seg-fill {
+    width: 100%;
+  }
+}

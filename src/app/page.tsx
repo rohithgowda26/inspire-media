@@ -1,6 +1,6 @@
-import { About } from "@/components/About";
 import { Approach } from "@/components/Approach";
 import { ClientShowcase } from "@/components/ClientShowcase";
+import { Manifesto } from "@/components/Manifesto";
 import { Contact } from "@/components/Contact";
 import { DesignStrip } from "@/components/DesignStrip";
 import { Faq } from "@/components/Faq";
@@ -28,7 +28,7 @@ export default function Home() {
         <ServiceList />
         <ClientShowcase />
         <DesignStrip />
-        <About />
+        <Manifesto />
         <SocialReels />
         <Approach />
         <Testimonials />
