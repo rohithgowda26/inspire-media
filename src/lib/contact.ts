@@ -2,9 +2,15 @@
  * Lead form schema + validation, shared by the browser form and the API route
  * so both enforce exactly the same rules.
  */
-import { leadOptions } from "./site";
+import { leadOptions, whatsappUrl } from "./site";
 
 export type LeadSource = "contact" | "popup";
+
+/** Human-readable form names, used in notifications. */
+export const SOURCE_LABEL: Record<LeadSource, string> = {
+  contact: "Contact Form",
+  popup: "Free Ad Account Audit",
+};
 
 export type LeadInput = {
   name: string;
@@ -21,6 +27,8 @@ export type LeadInput = {
   company?: string;
   /** Epoch ms when the form was first rendered (bot timing check). */
   startedAt?: number;
+  /** Random id created once per form fill, so a repeated submit is recognised as the same enquiry. */
+  submissionId?: string;
 };
 
 export type LeadField = "name" | "brand" | "phone" | "email" | "city" | "industry" | "service" | "budget" | "message";
@@ -39,7 +47,16 @@ const LIMITS: Record<LeadField, number> = {
   message: 2000,
 };
 
-const clean = (v: unknown) => (typeof v === "string" ? v.trim() : "");
+// Trim, drop control characters (keeping newlines in messages) and collapse runs of spaces.
+const clean = (v: unknown, multiline = false) =>
+  typeof v === "string"
+    ? v
+        .replace(multiline ? /[\u0000-\u0009\u000B-\u001F\u007F]/g : /[\u0000-\u001F\u007F]/g, " ")
+        .replace(/[ \u00A0]{2,}/g, " ")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim()
+    : "";
+const SUBMISSION_ID_RE = /^[A-Za-z0-9-]{8,64}$/;
 
 /** Validates and normalises raw input. Returns cleaned data or per-field messages. */
 export function validateLead(raw: Record<string, unknown>):
@@ -55,7 +72,7 @@ export function validateLead(raw: Record<string, unknown>):
     industry: clean(raw.industry),
     service: clean(raw.service),
     budget: clean(raw.budget),
-    message: clean(raw.message),
+    message: clean(raw.message, true),
   };
 
   (Object.keys(LIMITS) as LeadField[]).forEach((k) => {
@@ -69,7 +86,8 @@ export function validateLead(raw: Record<string, unknown>):
   else if (digits.length < 10 || digits.length > 13 || /[^\d\s+()-]/.test(v.phone))
     errors.phone = "Please enter a valid phone number.";
 
-  if (v.email && !EMAIL_RE.test(v.email)) errors.email = "Please enter a valid email address.";
+  if (!v.email) errors.email = "Please enter your email address.";
+  else if (!EMAIL_RE.test(v.email)) errors.email = "Please enter a valid email address.";
 
   if (v.service && !(leadOptions.services as readonly string[]).includes(v.service))
     errors.service = "Please choose a service from the list.";
@@ -82,6 +100,7 @@ export function validateLead(raw: Record<string, unknown>):
 
   const source: LeadSource = raw.source === "popup" ? "popup" : "contact";
   const startedAt = typeof raw.startedAt === "number" ? raw.startedAt : undefined;
+  const submissionId = typeof raw.submissionId === "string" && SUBMISSION_ID_RE.test(raw.submissionId) ? raw.submissionId : undefined;
   return {
     ok: true,
     data: {
@@ -97,6 +116,7 @@ export function validateLead(raw: Record<string, unknown>):
       ...(v.message && { message: v.message }),
       ...(typeof raw.company === "string" && raw.company && { company: raw.company }),
       ...(startedAt && { startedAt }),
+      ...(submissionId && { submissionId }),
     },
   };
 }
@@ -106,3 +126,31 @@ export const STORAGE = {
   leadSubmitted: "im_lead_submitted",
   popupDismissedAt: "im_popup_dismissed_at",
 } as const;
+
+/** A new id for one form fill (used to recognise accidental repeat submits). */
+export function newSubmissionId(): string {
+  try {
+    return crypto.randomUUID();
+  } catch {
+    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+  }
+}
+
+/**
+ * Fallback when automatic WhatsApp alerts aren't available: a wa.me link that opens WhatsApp
+ * with the visitor's enquiry already typed out, addressed to Inspire Media's number.
+ */
+export function enquiryWhatsAppUrl(lead: Partial<LeadInput>): string {
+  const lines = [
+    `Hi Inspire Media! I just sent an enquiry through your website (${SOURCE_LABEL[lead.source === "popup" ? "popup" : "contact"]}).`,
+    "",
+    lead.name && `Name: ${lead.name}`,
+    lead.brand && `Business: ${lead.brand}`,
+    lead.phone && `Phone: ${lead.phone}`,
+    lead.email && `Email: ${lead.email}`,
+    lead.service && `Service: ${lead.service}`,
+    lead.budget && `Budget: ${lead.budget}`,
+    lead.message && `Message: ${String(lead.message).slice(0, 600)}`,
+  ].filter((l): l is string => typeof l === "string");
+  return whatsappUrl(lines.join("\n"));
+}

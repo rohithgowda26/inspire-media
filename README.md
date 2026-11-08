@@ -37,32 +37,66 @@ WhatsApp/Call buttons → navy section (bento, process cards, contact form) → 
   stats count up; the "Ready to grow" phone rises as you scroll; 7-second "Free Ad account Audit" popup; Call/WhatsApp buttons after the hero.
   All motion is disabled for visitors who prefer reduced motion.
 
-## Contact form setup (required for enquiries to arrive)
+## Enquiries: Gmail notification + thank-you email
 
-The contact form and the 7-second "Free Ad account Audit" popup both post to `/api/contact`, which emails each enquiry to you.
-Set **one** provider in `.env.local` (and in your host's environment variables):
+Both forms (the contact section and the "Free Ad Account Audit" popup) post to `/api/contact`.
+For every real enquiry the server:
 
-**Option A — Resend (recommended)**
-1. Sign up at https://resend.com with `inspiremediabusinesses@gmail.com`.
-2. Create an API key → put it in `RESEND_API_KEY`.
-3. That's enough to start: enquiries arrive from Resend's test sender. To send from your own domain later, verify the domain in Resend and set `CONTACT_FROM_EMAIL`, e.g. `Inspire Media <hello@yourdomain.com>`.
+1. **Emails the enquiry to you** (`CONTACT_TO_EMAIL`, default `inspiremediabusinesses@gmail.com`), with name, email,
+   phone/WhatsApp, business, service, budget, message, which form it came from and the date and time (IST).
+   It uses an HTML layout with a plain-text version. Hit *Reply* to answer the client.
+2. **Emails the client a thank-you**, subject "We've Received Your Enquiry | Inspire Media".
 
-**Option B — Web3Forms**
-1. Get an access key at https://web3forms.com for `inspiremediabusinesses@gmail.com`.
-2. Put it in `WEB3FORMS_ACCESS_KEY`.
-3. If Web3Forms rejects requests sent from a server on your plan, switch to Resend.
+The visitor only sees "success" if step 1 reached your inbox. Otherwise they see an error with your phone number and a
+WhatsApp link that already contains their enquiry. A failed thank-you email is logged but never loses the enquiry.
+The Gmail password lives only in environment variables on the server, never in the browser.
 
-If no key is set, the form tells visitors it couldn't send and offers your phone number and WhatsApp instead. It never pretends an enquiry went through.
+### Install once
+```
+npm install nodemailer
+npm install -D @types/nodemailer
+```
 
-Built-in protection: server-side validation, a hidden honeypot field, a minimum fill-time check, and a limit of 5 submissions per visitor per 10 minutes.
+### Gmail setup (free)
+1. Sign in to **inspiremediabusinesses@gmail.com** → https://myaccount.google.com/security.
+2. Turn on **2-Step Verification**.
+3. Open https://myaccount.google.com/apppasswords, create one called `Website`, and copy the 16-letter password.
+4. In `.env.local`, and in Vercel → Settings → Environment Variables, set:
+   ```
+   CONTACT_TO_EMAIL=inspiremediabusinesses@gmail.com
+   GMAIL_USER=inspiremediabusinesses@gmail.com
+   GMAIL_APP_PASSWORD=<the 16-letter password>
+   ```
+
+Emails are sent *from* this Gmail, both to you and to the client. Gmail allows roughly 500 emails a day.
+
+**Alternatives:**
+- **Resend** (`RESEND_API_KEY`): thank-you emails need a verified domain in `CONTACT_FROM_EMAIL`.
+- **Web3Forms** (`WEB3FORMS_ACCESS_KEY`): sends the email to you only, no thank-you.
+
+### Protection that's built in
+- Validation and cleaning of every field, in the browser and again on the server. Email is required.
+- A hidden honeypot field and a minimum fill-time check (bots get a fake "ok" and nothing is sent).
+- A limit of 5 submissions per visitor per 10 minutes.
+- **Duplicate protection:** the button locks while sending, and each form fill carries a submission ID. The server
+  also remembers an enquiry for 10 minutes, so a double-click never sends two emails.
+
+### Test it
+1. Run `npm run build` (it should finish with no red errors), then `npm run dev` and open http://localhost:3000.
+2. Submit the **contact form** with a second email address of yours:
+   - Gmail gets "New enquiry: … · Contact Form".
+   - Your second inbox gets "We've Received Your Enquiry | Inspire Media". Check Spam the first time.
+3. **Popup:** run `localStorage.clear()` in the browser console, reload, wait 7 seconds and submit. You should get the
+   same two emails, labelled "Free Ad Account Audit".
+4. Add the same three variables in Vercel, push, and test once on the live site.
 
 ## Deploy (Vercel)
 
 1. Push this folder to a GitHub repository.
 2. Import it at https://vercel.com/new (framework is detected automatically).
-3. Add environment variables: `NEXT_PUBLIC_SITE_URL` (your domain) and your email provider key.
+3. Add environment variables: `NEXT_PUBLIC_SITE_URL` plus the three Gmail variables (see "Enquiries" above).
 4. Deploy, then add your domain under Project → Settings → Domains.
-5. Submit a test enquiry from the live site and confirm the email arrives.
+5. Submit a test enquiry from the live site and confirm both emails arrive.
 
 ## Where to change things
 

@@ -1,16 +1,7 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-  type CSSProperties,
-  type FormEvent,
-  type PointerEvent as ReactPointerEvent,
-} from "react";
-import { STORAGE, validateLead, type FieldErrors } from "@/lib/contact";
+import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type FormEvent, type PointerEvent as ReactPointerEvent } from "react";
+import { STORAGE, enquiryWhatsAppUrl, newSubmissionId, validateLead, type FieldErrors } from "@/lib/contact";
 import { whatsappUrl } from "@/lib/site";
 import { ArrowRightIcon, CheckIcon, CloseIcon } from "./ui/icons";
 
@@ -18,12 +9,7 @@ const DELAY_MS = 7_000;
 const SNOOZE_MS = 7 * 24 * 60 * 60 * 1000; // after closing, stay hidden for 7 days
 
 /** Questions that type themselves at the top of the popup. */
-const HOOKS = [
-  "Spending on ads but no enquiries?",
-  "Getting likes, not leads?",
-  "Not sure what’s actually working?",
-  "Ready to grow faster?",
-];
+const HOOKS = ["Spending on ads but no enquiries?", "Getting likes, not leads?", "Not sure what’s actually working?", "Ready to grow faster?"];
 
 /** "What do you need?" chips → the service value the contact API accepts. */
 const NEEDS = [
@@ -48,15 +34,12 @@ const STATS = [
   { value: "30+", label: "brands scaled" },
 ];
 
-const WA_MESSAGE =
-  "Hi Inspire Media! I saw your website and I'd like a free ad account audit.";
+const WA_MESSAGE = "Hi Inspire Media! I saw your website and I'd like a free ad account audit.";
 
 function shouldShow(): boolean {
   try {
     if (localStorage.getItem(STORAGE.leadSubmitted)) return false;
-    const dismissed = Number(
-      localStorage.getItem(STORAGE.popupDismissedAt) ?? 0,
-    );
+    const dismissed = Number(localStorage.getItem(STORAGE.popupDismissedAt) ?? 0);
     if (dismissed && Date.now() - dismissed < SNOOZE_MS) return false;
     if (sessionStorage.getItem("im_popup_shown")) return false;
   } catch {
@@ -118,9 +101,7 @@ function SwipeToChat() {
   };
   const onMove = (e: ReactPointerEvent<HTMLButtonElement>) => {
     if (!drag.current) return;
-    setX(
-      Math.max(0, Math.min(drag.current.max, e.clientX - drag.current.start)),
-    );
+    setX(Math.max(0, Math.min(drag.current.max, e.clientX - drag.current.start)));
   };
   const onUp = () => {
     const d = drag.current;
@@ -138,16 +119,9 @@ function SwipeToChat() {
   const progress = max > 0 ? x / max : 0;
 
   return (
-    <div
-      ref={track}
-      className="relative h-[60px] select-none overflow-hidden rounded-full border border-[#25d366]/30 bg-[#0c1a12] p-1"
-    >
+    <div ref={track} className="relative h-[60px] select-none overflow-hidden rounded-full border border-[#25d366]/30 bg-[#0c1a12] p-1">
       {/* filled trail */}
-      <span
-        aria-hidden="true"
-        className="absolute inset-y-1 left-1 rounded-full bg-[#25d366]/25"
-        style={{ width: x + HANDLE }}
-      />
+      <span aria-hidden="true" className="absolute inset-y-1 left-1 rounded-full bg-[#25d366]/25" style={{ width: x + HANDLE }} />
       {/* shimmering label */}
       <span
         aria-hidden="true"
@@ -173,20 +147,9 @@ function SwipeToChat() {
           }
         }}
         className="relative z-10 flex h-[52px] w-[52px] cursor-grab touch-none items-center justify-center rounded-full bg-[#25d366] text-white shadow-[0_6px_20px_rgb(37_211_102/0.45)] active:cursor-grabbing"
-        style={{
-          transform: `translateX(${x}px)`,
-          transition: drag.current
-            ? "none"
-            : "transform 0.4s cubic-bezier(.16,1,.3,1)",
-        }}
+        style={{ transform: `translateX(${x}px)`, transition: drag.current ? "none" : "transform 0.4s cubic-bezier(.16,1,.3,1)" }}
       >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          aria-hidden="true"
-        >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z" />
         </svg>
       </button>
@@ -203,46 +166,40 @@ function QuickForm({ onSuccess }: { onSuccess: () => void }) {
   const [need, setNeed] = useState(NEEDS[0].value);
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<FieldErrors>({});
+  const submissionId = useRef("");
+  const sending = useRef(false);
+  const [sent, setSent] = useState<Record<string, unknown>>({});
+  const [delivery, setDelivery] = useState<{ confirmation?: string }>({});
 
   useEffect(() => {
     startedAt.current = Date.now();
+    submissionId.current = newSubmissionId();
   }, []);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (sending.current) return; // ignore double-clicks while a request is in flight
     const form = e.currentTarget;
-    const raw = Object.fromEntries(new FormData(form).entries()) as Record<
-      string,
-      unknown
-    >;
-    const payload = {
-      ...raw,
-      service: need,
-      source: "popup",
-      startedAt: startedAt.current,
-    };
+    const raw = Object.fromEntries(new FormData(form).entries()) as Record<string, unknown>;
+    const payload = { ...raw, service: need, source: "popup" as const, startedAt: startedAt.current, submissionId: submissionId.current };
+    setSent(payload);
     const check = validateLead(payload);
     const found: FieldErrors = check.ok ? {} : { ...check.errors };
-    if (!String(raw.email ?? "").trim())
-      found.email = "Please enter your email address.";
+    if (!String(raw.email ?? "").trim()) found.email = "Please enter your email address.";
     if (Object.keys(found).length) {
       setErrors(found);
-      const first = (["name", "brand", "phone", "email"] as const).find(
-        (f) => found[f],
-      );
+      const first = (["name", "brand", "phone", "email"] as const).find((f) => found[f]);
       form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
     }
     setErrors({});
     setStatus("submitting");
+    sending.current = true;
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const body = (await res.json().catch(() => ({}))) as { ok?: boolean };
+      const res = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      const body = (await res.json().catch(() => ({}))) as { ok?: boolean; delivery?: { confirmation?: string } };
       if (res.ok && body.ok) {
+        setDelivery(body.delivery ?? {});
         setStatus("success");
         try {
           localStorage.setItem(STORAGE.leadSubmitted, "1");
@@ -253,119 +210,55 @@ function QuickForm({ onSuccess }: { onSuccess: () => void }) {
       setStatus("error");
     } catch {
       setStatus("error");
+    } finally {
+      sending.current = false;
     }
   }
 
   if (status === "success") {
     return (
-      <div
-        role="status"
-        className="pop-in flex flex-col items-center gap-4 py-10 text-center"
-      >
+      <div role="status" className="pop-in flex flex-col items-center gap-4 py-10 text-center">
         <span className="flex size-16 items-center justify-center rounded-full bg-primary text-white shadow-[0_0_40px_rgb(23_71_255/0.6)]">
           <CheckIcon size={30} />
         </span>
-        <p className="text-[24px] font-semibold tracking-[-0.02em] text-white">
-          You’re on our list.
-        </p>
+        <p className="text-[24px] font-semibold tracking-[-0.02em] text-white">You’re on our list.</p>
         <p className="max-w-xs text-[14px] leading-relaxed text-mist">
-          We’ll call you shortly to set up your free audit, and send the details
-          to your email. Want to talk sooner? Swipe below.
+          We’ll call you shortly to set up your free audit.
+          {delivery.confirmation === "sent" ? " We’ve emailed you a confirmation." : ""} Want to talk sooner? Swipe below.
         </p>
       </div>
     );
   }
 
-  const input =
-    "h-[52px] w-full rounded-2xl border bg-white/[0.04] px-4 text-[15px] text-white outline-none transition placeholder:text-[#66718a] focus:border-electric focus:bg-primary/[0.06] focus:shadow-[0_0_0_4px_rgb(40_123_255/0.15)]";
+  const input = "h-[52px] w-full rounded-2xl border bg-white/[0.04] px-4 text-[15px] text-white outline-none transition placeholder:text-[#66718a] focus:border-electric focus:bg-primary/[0.06] focus:shadow-[0_0_0_4px_rgb(40_123_255/0.15)]";
 
   return (
-    <form
-      noValidate
-      onSubmit={onSubmit}
-      className="flex flex-col gap-3.5"
-      aria-busy={status === "submitting"}
-    >
-      <div
-        aria-hidden="true"
-        className="absolute -left-[9999px] h-px w-px overflow-hidden"
-      >
+    <form noValidate onSubmit={onSubmit} className="flex flex-col gap-3.5" aria-busy={status === "submitting"}>
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
         <label htmlFor={`${uid}-company`}>Company website</label>
-        <input
-          id={`${uid}-company`}
-          name="company"
-          type="text"
-          tabIndex={-1}
-          autoComplete="off"
-        />
+        <input id={`${uid}-company`} name="company" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <label htmlFor={`${uid}-name`} className="sr-only">
-        Your name
-      </label>
-      <input
-        id={`${uid}-name`}
-        name="name"
-        type="text"
-        autoComplete="name"
-        placeholder="Your name"
-        aria-invalid={errors.name ? true : undefined}
-        className={`${input} ${errors.name ? "border-[#ff6b6b]" : "border-white/10"}`}
-      />
-      <label htmlFor={`${uid}-brand`} className="sr-only">
-        Business name
-      </label>
-      <input
-        id={`${uid}-brand`}
-        name="brand"
-        type="text"
-        autoComplete="organization"
-        placeholder="Business name (optional)"
-        aria-invalid={errors.brand ? true : undefined}
-        className={`${input} ${errors.brand ? "border-[#ff6b6b]" : "border-white/10"}`}
-      />
+      <label htmlFor={`${uid}-name`} className="sr-only">Your name</label>
+      <input id={`${uid}-name`} name="name" type="text" autoComplete="name" placeholder="Your name" aria-invalid={errors.name ? true : undefined} className={`${input} ${errors.name ? "border-[#ff6b6b]" : "border-white/10"}`} />
+      <label htmlFor={`${uid}-brand`} className="sr-only">Business name</label>
+      <input id={`${uid}-brand`} name="brand" type="text" autoComplete="organization" placeholder="Business name (optional)" aria-invalid={errors.brand ? true : undefined} className={`${input} ${errors.brand ? "border-[#ff6b6b]" : "border-white/10"}`} />
       <div className="grid gap-3.5 sm:grid-cols-2">
         <div>
-          <label htmlFor={`${uid}-phone`} className="sr-only">
-            Phone number
-          </label>
-          <input
-            id={`${uid}-phone`}
-            name="phone"
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel"
-            placeholder="Phone / WhatsApp"
-            aria-invalid={errors.phone ? true : undefined}
-            className={`${input} ${errors.phone ? "border-[#ff6b6b]" : "border-white/10"}`}
-          />
+          <label htmlFor={`${uid}-phone`} className="sr-only">Phone number</label>
+          <input id={`${uid}-phone`} name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="Phone / WhatsApp" aria-invalid={errors.phone ? true : undefined} className={`${input} ${errors.phone ? "border-[#ff6b6b]" : "border-white/10"}`} />
         </div>
         <div>
-          <label htmlFor={`${uid}-email`} className="sr-only">
-            Email address
-          </label>
-          <input
-            id={`${uid}-email`}
-            name="email"
-            type="email"
-            inputMode="email"
-            autoComplete="email"
-            placeholder="Email address"
-            aria-invalid={errors.email ? true : undefined}
-            className={`${input} ${errors.email ? "border-[#ff6b6b]" : "border-white/10"}`}
-          />
+          <label htmlFor={`${uid}-email`} className="sr-only">Email address</label>
+          <input id={`${uid}-email`} name="email" type="email" inputMode="email" autoComplete="email" placeholder="Email address" aria-invalid={errors.email ? true : undefined} className={`${input} ${errors.email ? "border-[#ff6b6b]" : "border-white/10"}`} />
         </div>
       </div>
       {(errors.name || errors.brand || errors.phone || errors.email) && (
-        <p className="text-[12.5px] text-[#ff8a8a]">
-          {errors.name || errors.brand || errors.phone || errors.email}
-        </p>
+        <p className="text-[12.5px] text-[#ff8a8a]">{errors.name || errors.brand || errors.phone || errors.email}</p>
       )}
 
       <fieldset className="mt-1">
-        <legend className="mb-2.5 text-[12.5px] font-medium text-mist">
-          I need help with
-        </legend>
+        <legend className="mb-2.5 text-[12.5px] font-medium text-mist">I need help with</legend>
         <div className="flex flex-wrap gap-2">
           {NEEDS.map((n) => (
             <button
@@ -374,9 +267,7 @@ function QuickForm({ onSuccess }: { onSuccess: () => void }) {
               aria-pressed={need === n.value}
               onClick={() => setNeed(n.value)}
               className={`cursor-pointer rounded-full border px-3.5 py-2 text-[13px] font-medium transition-all duration-300 ${
-                need === n.value
-                  ? "border-electric bg-primary text-white shadow-[0_0_20px_rgb(23_71_255/0.45)]"
-                  : "border-white/12 bg-white/[0.03] text-ice hover:border-white/30"
+                need === n.value ? "border-electric bg-primary text-white shadow-[0_0_20px_rgb(23_71_255/0.45)]" : "border-white/12 bg-white/[0.03] text-ice hover:border-white/30"
               }`}
             >
               {n.label}
@@ -387,15 +278,15 @@ function QuickForm({ onSuccess }: { onSuccess: () => void }) {
 
       {status === "error" && (
         <p role="alert" className="text-[13px] text-[#ffc2c2]">
-          Couldn’t send just now — swipe below to reach us on WhatsApp instead.
+          Couldn’t send just now —{" "}
+          <a href={enquiryWhatsAppUrl(sent)} target="_blank" rel="noopener noreferrer" className="font-semibold text-white underline">
+            send your request on WhatsApp
+          </a>{" "}
+          instead.
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={status === "submitting"}
-        className="group mt-2 flex h-[54px] cursor-pointer items-center justify-center gap-2 rounded-full bg-white text-[15px] font-bold text-[#050812] transition hover:bg-ice disabled:cursor-wait disabled:opacity-70"
-      >
+      <button type="submit" disabled={status === "submitting"} className="group mt-2 flex h-[54px] cursor-pointer items-center justify-center gap-2 rounded-full bg-white text-[15px] font-bold text-[#050812] transition hover:bg-ice disabled:cursor-wait disabled:opacity-70">
         {status === "submitting" ? "Sending…" : "Get my free audit"}
         {status !== "submitting" && (
           <span className="transition-transform duration-300 group-hover:translate-x-1">
@@ -405,10 +296,7 @@ function QuickForm({ onSuccess }: { onSuccess: () => void }) {
       </button>
       <p className="text-center text-[11.5px] text-muted">
         No spam. Your details are used only to reply to your enquiry.{" "}
-        <a
-          href="/privacy"
-          className="underline underline-offset-2 hover:text-white"
-        >
+        <a href="/privacy" className="underline underline-offset-2 hover:text-white">
           Privacy
         </a>
       </p>
@@ -465,11 +353,7 @@ export function StrategyPopup() {
         return;
       }
       if (e.key !== "Tab" || !dialog) return;
-      const items = Array.from(
-        dialog.querySelectorAll<HTMLElement>(
-          "a[href], button:not([disabled]), input:not([tabindex='-1'])",
-        ),
-      ).filter((el) => el.offsetParent !== null);
+      const items = Array.from(dialog.querySelectorAll<HTMLElement>("a[href], button:not([disabled]), input:not([tabindex='-1'])")).filter((el) => el.offsetParent !== null);
       if (!items.length) return;
       const first = items[0];
       const last = items[items.length - 1];
@@ -492,11 +376,7 @@ export function StrategyPopup() {
 
   return (
     <div className="fixed inset-0 z-[60] flex items-end justify-center sm:items-center sm:p-6">
-      <div
-        aria-hidden="true"
-        onClick={close}
-        className="absolute inset-0 bg-[#03050a]/80 backdrop-blur-md"
-      />
+      <div aria-hidden="true" onClick={close} className="absolute inset-0 bg-[#03050a]/80 backdrop-blur-md" />
       <div
         ref={dialogRef}
         role="dialog"
@@ -516,52 +396,26 @@ export function StrategyPopup() {
 
         {/* Pitch */}
         <div className="relative overflow-hidden px-6 pb-4 pt-8 sm:px-9 sm:pb-9 sm:pt-11">
-          <div
-            aria-hidden="true"
-            className="popup-orb absolute -left-24 -top-24 size-72 rounded-full bg-[radial-gradient(closest-side,rgb(23_71_255/0.55),transparent)]"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-[linear-gradient(rgb(255_255_255/0.03)_1px,transparent_1px),linear-gradient(90deg,rgb(255_255_255/0.03)_1px,transparent_1px)] bg-[size:36px_36px] [mask-image:linear-gradient(to_bottom,#000,transparent)]"
-          />
-          <span
-            aria-hidden="true"
-            className="mx-auto mb-5 block h-1 w-11 rounded-full bg-white/15 sm:hidden"
-          />
+          <div aria-hidden="true" className="popup-orb absolute -left-24 -top-24 size-72 rounded-full bg-[radial-gradient(closest-side,rgb(23_71_255/0.55),transparent)]" />
+          <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(rgb(255_255_255/0.03)_1px,transparent_1px),linear-gradient(90deg,rgb(255_255_255/0.03)_1px,transparent_1px)] bg-[size:36px_36px] [mask-image:linear-gradient(to_bottom,#000,transparent)]" />
+          <span aria-hidden="true" className="mx-auto mb-5 block h-1 w-11 rounded-full bg-white/15 sm:hidden" />
 
           <div className="relative flex flex-col gap-5">
-            <p
-              className="min-h-[1.5em] pr-12 font-mono text-[12px] text-ice/80"
-              aria-hidden="true"
-            >
+            <p className="min-h-[1.5em] pr-12 font-mono text-[12px] text-ice/80" aria-hidden="true">
               <span className="text-electric">›</span> {hook}
               <span className="caret" />
             </p>
-            <h2
-              id="popup-title"
-              className="text-[34px] font-semibold leading-[1.05] tracking-[-0.04em] text-white sm:text-[44px]"
-            >
+            <h2 id="popup-title" className="text-[34px] font-semibold leading-[1.05] tracking-[-0.04em] text-white sm:text-[44px]">
               Let’s turn your ads into <span className="hl">enquiries.</span>
             </h2>
             <p className="text-[15px] leading-relaxed text-mist">
-              Get a{" "}
-              <strong className="font-semibold text-white">
-                free ad account audit
-              </strong>
-              . We’ll show you what’s working, what’s wasting money and what to
-              try next — in a 20-minute call.
+              Get a <strong className="font-semibold text-white">free ad account audit</strong>. We’ll show you what’s working, what’s wasting money and what to try next — in a 20-minute call.
             </p>
             <div className="hidden md:block">
-              <p className="mb-3 font-mono text-[10.5px] uppercase tracking-[0.22em] text-electric">
-                What your audit covers
-              </p>
+              <p className="mb-3 font-mono text-[10.5px] uppercase tracking-[0.22em] text-electric">What your audit covers</p>
               <ul className="flex flex-col gap-2.5 text-[13.5px] text-ice">
                 {AUDIT.map((t, i) => (
-                  <li
-                    key={t}
-                    className="sv-slide flex items-start gap-2.5"
-                    style={{ "--d": `${300 + i * 140}ms` } as CSSProperties}
-                  >
+                  <li key={t} className="sv-slide flex items-start gap-2.5" style={{ "--d": `${300 + i * 140}ms` } as CSSProperties}>
                     <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/25 text-electric">
                       <CheckIcon size={11} />
                     </span>
@@ -572,30 +426,20 @@ export function StrategyPopup() {
             </div>
             <div className="mt-1 grid grid-cols-2 gap-3">
               {STATS.map((st) => (
-                <div
-                  key={st.label}
-                  className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3"
-                >
-                  <p className="text-[24px] font-semibold leading-none tracking-[-0.03em] text-white">
-                    {st.value}
-                  </p>
+                <div key={st.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3">
+                  <p className="text-[24px] font-semibold leading-none tracking-[-0.03em] text-white">{st.value}</p>
                   <p className="mt-1.5 text-[11.5px] text-mist">{st.label}</p>
                 </div>
               ))}
             </div>
-            <p className="hidden text-[12.5px] text-muted md:block">
-              Takes 30 seconds to request · Honest advice, no hard selling.
-            </p>
+            <p className="hidden text-[12.5px] text-muted md:block">Takes 30 seconds to request · Honest advice, no hard selling.</p>
           </div>
         </div>
 
         {/* Action */}
         <div className="flex flex-col gap-5 border-t border-white/[0.06] bg-white/[0.02] px-6 pb-8 pt-6 sm:px-9 sm:py-11 md:border-l md:border-t-0">
           <QuickForm onSuccess={() => setSubmitted(true)} />
-          <div
-            className="flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-muted"
-            aria-hidden="true"
-          >
+          <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-muted" aria-hidden="true">
             <span className="h-px flex-1 bg-white/10" />
             or
             <span className="h-px flex-1 bg-white/10" />
