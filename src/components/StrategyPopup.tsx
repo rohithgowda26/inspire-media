@@ -317,7 +317,11 @@ export function StrategyPopup() {
 
   useEffect(() => {
     if (!shouldShow()) return;
-    const t = window.setTimeout(() => {
+    let t = 0;
+    const start = () => {
+      t = window.setTimeout(show, DELAY_MS);
+    };
+    const show = () => {
       const active = document.activeElement;
       if (active && active.closest("form")) return;
       if (!shouldShow()) return;
@@ -326,8 +330,15 @@ export function StrategyPopup() {
       try {
         sessionStorage.setItem("im_popup_shown", "1");
       } catch {}
-    }, DELAY_MS);
-    return () => window.clearTimeout(t);
+    };
+    // Wait for the festive opening screen (if it's showing) before starting the countdown.
+    const introActive = (window as unknown as { __imIntroActive?: boolean }).__imIntroActive;
+    if (introActive) window.addEventListener("im:intro-done", start, { once: true });
+    else start();
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener("im:intro-done", start);
+    };
   }, []);
 
   const close = useCallback(() => {

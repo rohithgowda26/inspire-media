@@ -1,3 +1,4 @@
+import { DiwaliIntro } from "@/components/DiwaliIntro";
 import { Approach } from "@/components/Approach";
 import { ClientShowcase } from "@/components/ClientShowcase";
 import { Manifesto } from "@/components/Manifesto";
@@ -15,6 +16,7 @@ import { ServiceList } from "@/components/ServiceList";
 import { SocialReels } from "@/components/SocialReels";
 import { StartCta } from "@/components/StartCta";
 import { StrategyPopup } from "@/components/StrategyPopup";
+
 import { Testimonials } from "@/components/Testimonials";
 
 export default function Home() {
@@ -39,6 +41,7 @@ export default function Home() {
       </main>
       <Footer />
       <FloatingContact />
+      <DiwaliIntro />
       <StrategyPopup />
     </>
   );
