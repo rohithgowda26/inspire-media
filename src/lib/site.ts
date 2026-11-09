@@ -500,6 +500,11 @@ export const socialReels = {
     { video: "/reels/reel-5.mp4", poster: "/reels/reel-5.jpg", title: "Plots in Hubballi", tag: "Real estate" },
     { video: "/reels/reel-6.mp4", poster: "/reels/reel-6.jpg", title: "Property listings", tag: "Real estate" },
     { video: "/reels/reel-7.mp4", poster: "/reels/reel-7.jpg", title: "Showroom walkthrough", tag: "Retail" },
+        { video: "/reels/reel-8.mp4", poster: "/reels/reel-8.jpg", title: "SVT Gold Diwali", tag: "Festive" },
+    { video: "/reels/reel-9.mp4", poster: "/reels/reel-9.jpg", title: "Mumbai's Diwali sweets", tag: "Festive" },
+    { video: "/reels/reel-10.mp4", poster: "/reels/reel-10.jpg", title: "Hubballi Avalakki", tag: "Food" },
+    { video: "/reels/reel-11.mp4", poster: "/reels/reel-11.jpg", title: "Mumbai's Potato Chips", tag: "Food" },
+    { video: "/reels/reel-12.mp4", poster: "/reels/reel-12.jpg", title: "Inspire Media showreel", tag: "Brand" },
   ],
 };
 
