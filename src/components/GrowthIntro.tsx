@@ -5,8 +5,9 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from "re
 import { growthIntro, site } from "@/lib/site";
 import { Reveal } from "./ui/Reveal";
 
-const profiles = growthIntro.profiles;
-const N = profiles.length;
+const posts = growthIntro.posts;
+const N = posts.length;
+const IG_URL = site.contact.instagram.url;
 const AUTOPLAY_MS = growthIntro.autoplaySeconds * 1000;
 
 /** Types each word out, pauses, deletes it, then moves to the next. */
@@ -39,89 +40,6 @@ function useTypewriter(words: readonly string[]) {
   return text;
 }
 
-const TILE_LABELS = ["Ad creative", "Reel", "Carousel", "Story"];
-const HIGHLIGHTS = ["Offers", "Reels", "Updates", "Contact"];
-
-/**
- * Instagram-style profile card (dark, like Instagram on the web), built from the client's
- * logo, name, category and brand colours. Shown until a real screenshot is set in site.ts.
- * Sizes use container units (cqw) so it scales with the card.
- */
-function ProfileCard({ p }: { p: (typeof profiles)[number] }) {
-  const c = p.client;
-  const [accent, dark] = p.colors;
-  const username = p.handle || c.name.toLowerCase().replace(/[^a-z0-9]+/g, ".").replace(/^\.|\.$/g, "");
-  return (
-    <div className="@container flex h-full flex-col bg-black text-left text-white">
-      {/* Header: avatar + name + buttons */}
-      <div className="flex items-center gap-[4cqw] px-[4.5cqw] pt-[4cqw]">
-        <span className="shrink-0 rounded-full bg-[conic-gradient(from_200deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5,#feda75)] p-[0.6cqw]">
-          <span className="flex size-[14cqw] items-center justify-center overflow-hidden rounded-full border-[0.6cqw] border-black bg-white p-[1.6cqw]">
-            <Image src={c.logo} alt="" width={c.w} height={c.h} sizes="80px" className="max-h-full w-auto object-contain" />
-          </span>
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="flex items-center gap-[1.6cqw]">
-            <span className="truncate text-[3.3cqw] font-semibold">{username}</span>
-            <span className="shrink-0 rounded-[1.2cqw] bg-[#0095f6] px-[2.6cqw] py-[0.9cqw] text-[2.3cqw] font-semibold">Follow</span>
-            <span className="shrink-0 rounded-[1.2cqw] bg-white/[0.14] px-[2.6cqw] py-[0.9cqw] text-[2.3cqw] font-semibold">Message</span>
-          </span>
-          <span className="mt-[1.2cqw] block truncate text-[2.7cqw] font-semibold">{c.name}</span>
-          <span className="block truncate text-[2.4cqw] text-white/55">{p.category}</span>
-          <span className="block truncate text-[2.4cqw] text-[#e0f1ff]">Growth by {site.contact.instagram.handle}</span>
-        </span>
-      </div>
-
-      {/* Story highlights */}
-      <div className="flex gap-[4cqw] px-[5cqw] pt-[3cqw]">
-        {HIGHLIGHTS.map((h, i) => (
-          <span key={h} className="flex flex-col items-center gap-[0.8cqw]">
-            <span
-              className="flex size-[8cqw] items-center justify-center rounded-full border-[0.4cqw] border-white/25"
-              style={{ background: `radial-gradient(circle at 35% 30%, ${i % 2 ? dark : accent}, #111)` }}
-            >
-              <span className="size-[2.4cqw] rounded-full bg-white/70" />
-            </span>
-            <span className="text-[1.9cqw] text-white/80">{h}</span>
-          </span>
-        ))}
-      </div>
-
-      {/* Tabs */}
-      <div className="mt-[2.4cqw] flex justify-center gap-[10cqw] border-t border-white/10 text-[1.8cqw] font-semibold uppercase tracking-[0.12em] text-white/45">
-        <span className="-mt-px border-t border-white pt-[1.2cqw] text-white">▦ Posts</span>
-        <span className="pt-[1.2cqw]">▶ Reels</span>
-        <span className="pt-[1.2cqw]">◫ Tagged</span>
-      </div>
-
-      {/* Posts */}
-      <div className="mt-[1.6cqw] grid flex-1 grid-cols-4 gap-[0.5cqw]">
-        {TILE_LABELS.map((label, i) => (
-          <span
-            key={label}
-            className="relative flex flex-col items-center justify-center overflow-hidden"
-            style={{
-              background:
-                i % 2 === 0
-                  ? `linear-gradient(160deg, ${accent} 0%, ${dark} 100%)`
-                  : `radial-gradient(120% 90% at 30% 20%, ${dark} 0%, #050505 75%)`,
-            }}
-          >
-            {i === 1 && <span className="absolute right-[1.4cqw] top-[1.2cqw] text-[2.4cqw]">▶</span>}
-            {i === 2 && <span className="absolute right-[1.4cqw] top-[1.2cqw] text-[2.2cqw]">❐</span>}
-            <span className={`flex items-center justify-center rounded-full bg-white/90 p-[1.2cqw] ${i % 2 === 0 ? "size-[11cqw]" : "size-[8cqw]"}`}>
-              <Image src={c.logo} alt="" width={c.w} height={c.h} sizes="60px" className="max-h-full w-auto object-contain" />
-            </span>
-            <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent px-[1.2cqw] pb-[1cqw] pt-[3cqw] text-center text-[1.9cqw] font-semibold">
-              {label}
-            </span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function InstagramIcon({ size = 16 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -134,7 +52,7 @@ function InstagramIcon({ size = 16 }: { size?: number }) {
 
 /**
  * Below the hero: "We grow brands through <typed word>" on the left,
- * a fanned deck of client Instagram profiles with ‹ › controls on the right.
+ * a fanned deck of Inspire Media's own Instagram posts with ‹ › controls on the right.
  */
 export function GrowthIntro() {
   const word = useTypewriter(growthIntro.words);
@@ -151,7 +69,7 @@ export function GrowthIntro() {
     return () => window.clearInterval(id);
   }, [go]);
 
-  const current = profiles[active];
+  const current = posts[active];
 
   return (
     <section id="intro" aria-labelledby="intro-title" className="relative isolate overflow-x-clip px-4 py-24 sm:px-6 lg:py-32">
@@ -187,14 +105,14 @@ export function GrowthIntro() {
           </div>
         </Reveal>
 
-        {/* Fanned deck of client Instagram profiles */}
+        {/* Fanned deck of Inspire Media Instagram posts */}
         <div
           className="relative mx-auto w-full max-w-[520px]"
           onFocus={() => (paused.current = true)}
           onBlur={() => (paused.current = false)}
         >
-          <div className="relative mx-auto aspect-[16/11] w-[78%]" aria-live="polite">
-            {profiles.map((p, i) => {
+          <div className="relative mx-auto aspect-[4/5] w-[64%] max-w-[340px]" aria-live="polite">
+            {posts.map((p, i) => {
               let d = i - active;
               if (d > N / 2) d -= N;
               if (d < -N / 2) d += N;
@@ -210,35 +128,23 @@ export function GrowthIntro() {
                       zIndex: 50 - ad,
                       filter: `grayscale(0.7) blur(${ad * 0.5}px)`,
                     };
-              const card = (
-                <div className="relative h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-panel shadow-[0_30px_70px_-25px_rgb(0_0_0/0.9)]">
-                  {p.image ? (
-                    <Image src={p.image} alt={`${p.client.name} on Instagram`} fill sizes="(min-width: 1024px) 420px, 80vw" className="object-cover object-top" />
-                  ) : (
-                    <ProfileCard p={p} />
-                  )}
-                </div>
-              );
               return (
                 <div
-                  key={p.client.name}
+                  key={p.src}
                   aria-hidden={d !== 0}
                   className="absolute inset-0 transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(.22,1,.36,1)]"
                   style={style}
                 >
-                  {p.handle && d === 0 ? (
-                    <a
-                      href={`https://www.instagram.com/${p.handle}/`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${p.client.name} on Instagram (@${p.handle})`}
-                      className="block h-full w-full"
-                    >
-                      {card}
-                    </a>
-                  ) : (
-                    card
-                  )}
+                  <a
+                    href={IG_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={d === 0 ? 0 : -1}
+                    aria-label={`${p.title} — see more on Instagram (${site.contact.instagram.handle})`}
+                    className="block h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-panel shadow-[0_30px_70px_-25px_rgb(0_0_0/0.9)]"
+                  >
+                    <Image src={p.src} alt={p.title} width={800} height={1000} sizes="(min-width: 1024px) 340px, 64vw" priority={i < 2} className="h-full w-full object-cover" />
+                  </a>
                 </div>
               );
             })}
@@ -247,7 +153,7 @@ export function GrowthIntro() {
           <button
             type="button"
             onClick={() => go(-1)}
-            aria-label="Previous client"
+            aria-label="Previous post"
             className="absolute left-0 top-1/2 z-[60] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-electric/60 bg-ink/70 text-ice backdrop-blur transition hover:bg-primary hover:text-white"
           >
             ‹
@@ -255,7 +161,7 @@ export function GrowthIntro() {
           <button
             type="button"
             onClick={() => go(1)}
-            aria-label="Next client"
+            aria-label="Next post"
             className="absolute right-0 top-1/2 z-[60] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-electric/60 bg-ink/70 text-ice backdrop-blur transition hover:bg-primary hover:text-white"
           >
             ›
@@ -263,7 +169,10 @@ export function GrowthIntro() {
 
           <p className="relative z-[60] mt-14 flex items-center justify-center gap-2 text-center text-[13px] text-mist">
             <InstagramIcon size={14} />
-            <span className="font-semibold text-white">{current.client.name}</span>
+            <a href={IG_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-ice">
+              {site.contact.instagram.handle}
+            </a>
+            <span className="hidden text-mist sm:inline">· {current.title}</span>
             <span className="text-muted">
               {active + 1} / {N}
             </span>

@@ -7,78 +7,11 @@ import { Reveal } from "./ui/Reveal";
 import { Hl } from "./ui/Hl";
 import { CloseIcon } from "./ui/icons";
 
-const words = designWork.words;
-const N = words.length;
-const LINE = 1.22; // em per word row
-
-/**
- * Black tile with a vertical word roller: the middle word is sharp with an arrow,
- * the words above and below fade and blur, and the column rolls up every ~1.4s.
- */
-function WordTile({ offset }: { offset: number }) {
-  const [i, setI] = useState(N + offset); // start in the middle copy so we can roll both ways
-  const [animate, setAnimate] = useState(true);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = window.setInterval(() => setI((v) => v + 1), 1400);
-    return () => window.clearInterval(id);
-  }, []);
-
-  // After rolling through one full copy, jump back silently to keep the list short
-  useEffect(() => {
-    if (i < 2 * N) return;
-    const t = window.setTimeout(() => {
-      setAnimate(false);
-      setI((v) => v - N);
-      requestAnimationFrame(() => requestAnimationFrame(() => setAnimate(true)));
-    }, 750);
-    return () => window.clearTimeout(t);
-  }, [i]);
-
-  const list = [...words, ...words, ...words];
-
-  return (
-    <div aria-hidden="true" className="relative flex aspect-square h-full shrink-0 items-center overflow-hidden rounded-[18px] bg-black px-6 sm:px-8">
-      <span className="absolute left-5 top-1/2 z-10 -translate-y-1/2 text-[26px] font-bold text-white sm:left-7 sm:text-[34px]">→</span>
-      <div className="relative h-full w-full pl-9 text-[24px] font-bold leading-none tracking-[-0.03em] sm:pl-12 sm:text-[32px]">
-        <div
-          className="absolute inset-x-0 top-1/2 pl-9 sm:pl-12"
-          style={{
-            transform: `translateY(${-(i + 0.5) * LINE}em)`,
-            transition: animate ? "transform 0.7s cubic-bezier(.16,1,.3,1)" : "none",
-          }}
-        >
-          {list.map((w, k) => {
-            const dist = Math.abs(k - i);
-            return (
-              <span
-                key={k}
-                className="block whitespace-nowrap text-white"
-                style={{
-                  height: `${LINE}em`,
-                  lineHeight: `${LINE}em`,
-                  opacity: dist === 0 ? 1 : dist === 1 ? 0.35 : dist === 2 ? 0.14 : 0,
-                  filter: dist === 0 ? "none" : `blur(${Math.min(dist, 3) * 1.6}px)`,
-                  transform: dist === 0 ? "none" : `rotate(${k < i ? -6 : 6}deg)`,
-                  transition: animate ? "opacity .6s, filter .6s, transform .6s" : "none",
-                }}
-              >
-                {w}
-              </span>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 type Tile = (typeof designWork.tiles)[number];
 
 /**
- * Graphic design showcase: a continuously moving strip of real creatives with black
- * word-roller tiles in between (pauses on hover). Tap a design to see it full size.
+ * Graphic design showcase: a continuously moving strip of real creatives
+ * (pauses on hover). Tap a design to see it full size.
  */
 export function DesignStrip() {
   const [open, setOpen] = useState<Tile | null>(null);
@@ -93,8 +26,7 @@ export function DesignStrip() {
 
   const row = (copy: number) => (
     <div key={copy} aria-hidden={copy === 1} className="flex h-full shrink-0 gap-4 pr-4 sm:gap-5 sm:pr-5">
-      {designWork.tiles.map((t, k) => {
-        if (t.word) return <WordTile key={`w${k}`} offset={(k * 3) % N} />;
+      {designWork.tiles.map((t) => {
         return (
           <button
             key={t.src}
