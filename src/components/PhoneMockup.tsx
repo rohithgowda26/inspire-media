@@ -90,7 +90,8 @@ export function CallScreen() {
 
 /** Main phone screen: growth summary built only from IM.pdf facts. */
 export function GrowthScreen() {
-  const avatars = [clients[8], clients[3], clients[11], clients[4]];
+  const byName = (n: string) => clients.find((c) => c.name.startsWith(n))!;
+  const avatars = ["Hotel Naveen", "SVT", "Parge", "SLS"].map(byName);
   return (
     <div className="flex flex-col gap-4 px-5 pb-6 pt-3 text-white">
       <div className="flex items-center justify-between">

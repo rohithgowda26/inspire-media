@@ -609,6 +609,9 @@ select.field-light {
 }
 
 /* placeholder / fallback curtains (the WebGL cloth replaces them once ready) */
+.dv-stage.cloth-ready .dv-css {
+  display: none;
+}
 .dv-curtain {
   position: absolute;
   top: 0;

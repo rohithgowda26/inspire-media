@@ -7,7 +7,8 @@ import { GrowthScreen, PhoneFrame } from "./PhoneMockup";
 import { QuickCapture } from "./QuickCapture";
 
 /** Logos for the "Trusted by" row (shown monochrome, colour on hover). */
-const trusted = [0, 2, 3, 4, 7, 8, 10, 11].map((i) => clients[i]);
+const byName = (n: string) => clients.find((c) => c.name.startsWith(n))!;
+const trusted = ["Ganesh", "Kreedangana", "SVT", "SLS", "Hubli Shamiyana", "Hotel Naveen", "Mumbai", "Parge"].map(byName);
 
 const clamp = (v: number) => Math.min(1, Math.max(0, v));
 const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);

@@ -366,13 +366,11 @@ export function startCloth(canvas: HTMLCanvasElement, onReady?: () => void): Clo
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   };
 
-  // settle the cloth before the first frame so it already hangs naturally
+  // the cloth settles into its folds over the first few frames (in small chunks, so the page never freezes)
   const SUB = 1 / 120;
   let simT = 0;
-  for (let s = 0; s < 160; s++) {
-    simT += SUB;
-    for (const P of panels) stepPanel(P, W, H, railY, restX, restY, 0, gatherW, simT, SUB);
-  }
+  const SETTLE = small ? 36 : 44;
+  let settled = 0;
 
   // (test hook: lets an automated check fast-forward the physics on a slow machine)
   const hook = (window as unknown as { __clothTest?: { maxSteps: number; maxDt: number } }).__clothTest;
@@ -386,6 +384,17 @@ export function startCloth(canvas: HTMLCanvasElement, onReady?: () => void): Clo
   let settledAt = -1;
   let ready = false;
   const frame = (now: number) => {
+    if (settled < SETTLE) {
+      const t0 = performance.now();
+      while (settled < SETTLE && performance.now() - t0 < 14) {
+        simT += SUB;
+        for (const P of panels) stepPanel(P, W, H, railY, restX, restY, 0, gatherW, simT, SUB);
+        settled++;
+      }
+      last = now;
+      raf = requestAnimationFrame(frame);
+      return;
+    }
     acc += Math.max(0, Math.min((now - last) / 1000, maxDt));
     last = now;
     // opening follows simulation time, so a slow device plays it in slow motion instead of glitching

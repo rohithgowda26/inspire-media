@@ -31,7 +31,7 @@ const AUDIT = [
 /** Proof points from the Inspire Media brochure. */
 const STATS = [
   { value: "3x", label: "average ROAS growth" },
-  { value: "30+", label: "brands scaled" },
+  { value: "50+", label: "brands scaled" },
 ];
 
 const WA_MESSAGE = "Hi Inspire Media! I saw your website and I'd like a free ad account audit.";

@@ -3,7 +3,11 @@
 .dv-stage.is-leaving { opacity: 0; pointer-events: none; }
 .dv-stage:not(.is-open) { cursor: pointer; }
 
-/* placeholder / fallback curtains (the WebGL cloth replaces them once ready) */
+/* the cloth fades in as soon as it's ready (dark website background until then — no blank red screen) */
+.dv-cloth { opacity: 0; transition: opacity 0.45s ease; }
+.dv-stage.cloth-ready .dv-cloth { opacity: 1; }
+
+/* fallback curtains, only when WebGL isn't available */
 .dv-curtain {
   position: absolute; top: 0; bottom: 0; width: 50.5%; z-index: 3;
   background:
@@ -14,9 +18,10 @@
 .dv-curtain-l { left: 0; transform-origin: 0 50%; }
 .dv-curtain-r { right: 0; transform-origin: 100% 50%; }
 .dv-stage.is-open .dv-curtain-l, .dv-stage.is-open .dv-curtain-r { transform: scaleX(0.1); }
-.dv-stage.cloth-ready .dv-css { display: none; }
+.dv-css { display: none; }
+.dv-stage.cloth-failed .dv-css { display: block; }
 
-.dv-caption { animation: dv-in 1s 0.3s cubic-bezier(.2,.7,.2,1) both; }
+.dv-caption { animation: dv-in 0.8s 0.1s cubic-bezier(.2,.7,.2,1) both; }
 .dv-stage.is-open .dv-caption { animation: dv-out 0.45s ease forwards; }
 @keyframes dv-out { to { opacity: 0; transform: translateY(-6px); } }
 
