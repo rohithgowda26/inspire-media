@@ -19,7 +19,11 @@ export const site = {
       { display: "+91 81978 70825", tel: "+918197870825" },
     ],
     /** Number used by the floating Call / WhatsApp buttons and the popup. */
-    primaryPhone: { display: "+91 79962 98443", tel: "+917996298443", whatsapp: "917996298443" },
+    primaryPhone: {
+      display: "+91 79962 98443",
+      tel: "+917996298443",
+      whatsapp: "917996298443",
+    },
     email: "inspiremediabusinesses@gmail.com",
     address: {
       line1: "126, Revenue Colony, Raj Nagar",
@@ -28,7 +32,10 @@ export const site = {
       region: "Karnataka",
       country: "IN",
     },
-    instagram: { handle: "@inspire.media.in", url: "https://www.instagram.com/inspire.media.in/" },
+    instagram: {
+      handle: "@inspire.media.in",
+      url: "https://www.instagram.com/inspire.media.in/",
+    },
   },
 
   nav: [
@@ -56,9 +63,18 @@ export const home = {
   },
   statement: ["Every rupee [tracked],", "optimised and [accountable]."],
   bento: {
-    content: { title: "Creative content strategy", body: "Strategies rooted in data, designed to connect emotionally — content that builds brand and drives sales." },
-    ads: { title: "Performance ads", body: "High-converting campaigns across Meta, Google and beyond, tailored to your goals." },
-    roas: { title: "3x average ROAS growth", body: "We test creatives, audiences and funnels to bring acquisition cost down while scaling returns." },
+    content: {
+      title: "Creative content strategy",
+      body: "Strategies rooted in data, designed to connect emotionally — content that builds brand and drives sales.",
+    },
+    ads: {
+      title: "Performance ads",
+      body: "High-converting campaigns across Meta, Google and beyond, tailored to your goals.",
+    },
+    roas: {
+      title: "3x average ROAS growth",
+      body: "We test creatives, audiences and funnels to bring acquisition cost down while scaling returns.",
+    },
     seo: {
       title: "Search engine optimisation",
       body: "Long-term organic visibility, tied to revenue — not just rankings. Traffic that compounds over time.",
@@ -68,15 +84,31 @@ export const home = {
     title: "Brands we’ve [worked with]",
     body: "Real estate, hospitality, sports, food and the public sector — the brands that trusted us with their growth.",
     footTitle: "50+ brands scaled with one growth partner",
-    footBody: "Every engagement starts with an audit of your marketing, competitors and opportunities — and is measured by results.",
+    footBody:
+      "Every engagement starts with an audit of your marketing, competitors and opportunities — and is measured by results.",
   },
   about: {
     title: "Built for brands, [see for yourself]",
     body: "is a performance marketing agency built exclusively for Brands and D2C businesses. We operate as your growth partner — deeply invested in your numbers, your category and your customers.",
     stats: [
-      { value: 90, unit: " Days", label: "to see results", body: "A commitment to measurable improvement within 90 days, with transparent, data-driven reporting." },
-      { value: 3, unit: "x", label: "average ROAS growth", body: "Every rupee you spend is tracked, optimised and accountable." },
-      { value: 30, unit: "+", label: "brands scaled", body: "Real estate, hospitality, sports, food and the public sector — growth partner, not vendor." },
+      {
+        value: 90,
+        unit: " Days",
+        label: "to see results",
+        body: "A commitment to measurable improvement within 90 days, with transparent, data-driven reporting.",
+      },
+      {
+        value: 3,
+        unit: "x",
+        label: "average ROAS growth",
+        body: "Every rupee you spend is tracked, optimised and accountable.",
+      },
+      {
+        value: 30,
+        unit: "+",
+        label: "brands scaled",
+        body: "Real estate, hospitality, sports, food and the public sector — growth partner, not vendor.",
+      },
     ],
   },
   start: {
@@ -103,7 +135,12 @@ export const services = [
     subtitle: "Search Engine Optimisation",
     punch: "Show up when they search.",
     body: "We build long-term organic visibility so your brand shows up when your customers are actively searching. From keyword strategy and technical SEO to content architecture and link building — everything is tied to revenue, not just rankings. The result is sustainable traffic that compounds over time.",
-    tags: ["Keyword strategy", "Technical SEO", "Content architecture", "Link building"],
+    tags: [
+      "Keyword strategy",
+      "Technical SEO",
+      "Content architecture",
+      "Link building",
+    ],
   },
   {
     id: "paid-ads",
@@ -123,26 +160,90 @@ export const services = [
     subtitle: "Creative Content Strategy",
     punch: "Content that sells.",
     body: "Great ads and SEO need great content behind them. Our team builds strategies rooted in data but designed to connect emotionally with your audience — from ad creatives and landing pages to social content and brand storytelling. Content that builds brand and drives sales.",
-    tags: ["Ad creatives", "Landing pages", "Social content", "Brand storytelling"],
+    tags: [
+      "Ad creatives",
+      "Landing pages",
+      "Social content",
+      "Brand storytelling",
+    ],
   },
 ] as const;
 
 export const clients = [
-  { name: "Ganesh Promoters & Developers", logo: "/clients/ganesh-promoters.png", w: 359, h: 360 },
-  { name: "Hubli-Dharwad Municipal Corporation", logo: "/clients/hubli-dharwad-municipal-corporation.png", w: 358, h: 358 },
-  { name: "Kreedangana Sports Management", logo: "/clients/kreedangana-sports.png", w: 321, h: 303 },
-  { name: "SVT Gold Cooking Oil", logo: "/clients/svt-gold.png", w: 360, h: 235 },
-  { name: "SLS Cricket Academy", logo: "/clients/sls-cricket-academy.png", w: 360, h: 185 },
-  { name: "Cotton County Club", logo: "/clients/cotton-county-club.png", w: 360, h: 359 },
-  { name: "Sri Srinivasa Garden", logo: "/clients/sri-srinivasa-garden.png", w: 360, h: 174 },
-  { name: "Hubli Shamiyana Suppliers", logo: "/clients/hubli-shamiyana.png", w: 360, h: 121 },
+  {
+    name: "Ganesh Promoters & Developers",
+    logo: "/clients/ganesh-promoters.png",
+    w: 359,
+    h: 360,
+  },
+  {
+    name: "Hubli-Dharwad Municipal Corporation",
+    logo: "/clients/hubli-dharwad-municipal-corporation.png",
+    w: 358,
+    h: 358,
+  },
+  {
+    name: "Kreedangana Sports Management",
+    logo: "/clients/kreedangana-sports.png",
+    w: 321,
+    h: 303,
+  },
+  {
+    name: "SVT Gold Cooking Oil",
+    logo: "/clients/svt-gold.png",
+    w: 360,
+    h: 235,
+  },
+  {
+    name: "SLS Cricket Academy",
+    logo: "/clients/sls-cricket-academy.png",
+    w: 360,
+    h: 185,
+  },
+  {
+    name: "Cotton County Club",
+    logo: "/clients/cotton-county-club.png",
+    w: 360,
+    h: 359,
+  },
+  {
+    name: "Sri Srinivasa Garden",
+    logo: "/clients/sri-srinivasa-garden.png",
+    w: 360,
+    h: 174,
+  },
+  {
+    name: "Hubli Shamiyana Suppliers",
+    logo: "/clients/hubli-shamiyana.png",
+    w: 360,
+    h: 121,
+  },
   { name: "Hotel Naveen", logo: "/clients/hotel-naveen.png", w: 360, h: 141 },
-  { name: "Parge Constructions", logo: "/clients/parge-constructions.png", w: 360, h: 140 },
-  { name: "Nawani Developers", logo: "/clients/nawani-developers.png", w: 300, h: 300 },
-  { name: "Hubballi Avalakki", logo: "/clients/hubballi-avalakki.png", w: 360, h: 250 },
-  { name: "Divine Wellness Center", logo: "/clients/divine-wellness.png", w: 360, h: 285 },
+  {
+    name: "Parge Constructions",
+    logo: "/clients/parge-constructions.png",
+    w: 360,
+    h: 140,
+  },
+  {
+    name: "Nawani Developers",
+    logo: "/clients/nawani-developers.png",
+    w: 300,
+    h: 300,
+  },
+  {
+    name: "Divine Wellness Center",
+    logo: "/clients/divine-wellness.png",
+    w: 360,
+    h: 285,
+  },
   { name: "Mumbai's", logo: "/clients/mumbais.png", w: 360, h: 153 },
-  { name: "MIRA Silver Jewellery & Giftings", logo: "/clients/mira-silver.png", w: 310, h: 225 },
+  {
+    name: "MIRA Silver Jewellery & Giftings",
+    logo: "/clients/mira-silver.png",
+    w: 310,
+    h: 225,
+  },
 ] as const;
 
 /** Look a client up by (the start of) its name — safe when clients are added or removed. */
@@ -170,14 +271,62 @@ export const growthIntro = {
   /** Seconds between automatic slide changes. */
   autoplaySeconds: 2.6,
   profiles: [
-    { client: client("Hotel Naveen"), handle: "", image: "", category: "Hotel & restaurant · Hubli", colors: ["#c9a24b", "#3a2a12"] },
-    { client: client("SVT"), handle: "", image: "", category: "Cooking oil brand", colors: ["#e8b422", "#b3261e"] },
-    { client: client("Parge"), handle: "", image: "", category: "Construction company", colors: ["#f08a24", "#2b2f3a"] },
-    { client: client("SLS"), handle: "", image: "", category: "Cricket academy", colors: ["#1fa58f", "#0c3b4a"] },
-    { client: client("Ganesh"), handle: "", image: "", category: "Real estate developer", colors: ["#3f7bd8", "#15233f"] },
-    { client: client("Kreedangana"), handle: "", image: "", category: "Sports management", colors: ["#d8343b", "#1b1b1f"] },
-    { client: client("Cotton"), handle: "", image: "", category: "Club & resort", colors: ["#5aa05a", "#173322"] },
-    { client: client("Hubballi Avalakki"), handle: "", image: "", category: "Food brand · Hubli", colors: ["#e3262d", "#3a0d0f"] },
+    {
+      client: client("Hotel Naveen"),
+      handle: "",
+      image: "",
+      category: "Hotel & restaurant · Hubli",
+      colors: ["#c9a24b", "#3a2a12"],
+    },
+    {
+      client: client("SVT"),
+      handle: "",
+      image: "",
+      category: "Cooking oil brand",
+      colors: ["#e8b422", "#b3261e"],
+    },
+    {
+      client: client("Parge"),
+      handle: "",
+      image: "",
+      category: "Construction company",
+      colors: ["#f08a24", "#2b2f3a"],
+    },
+    {
+      client: client("SLS"),
+      handle: "",
+      image: "",
+      category: "Cricket academy",
+      colors: ["#1fa58f", "#0c3b4a"],
+    },
+    {
+      client: client("Ganesh"),
+      handle: "",
+      image: "",
+      category: "Real estate developer",
+      colors: ["#3f7bd8", "#15233f"],
+    },
+    {
+      client: client("Kreedangana"),
+      handle: "",
+      image: "",
+      category: "Sports management",
+      colors: ["#d8343b", "#1b1b1f"],
+    },
+    {
+      client: client("Cotton"),
+      handle: "",
+      image: "",
+      category: "Club & resort",
+      colors: ["#5aa05a", "#173322"],
+    },
+    {
+      client: client("Mumbai"),
+      handle: "",
+      image: "",
+      category: "Snacks & sweets brand",
+      colors: ["#2e2585", "#d8b26a"],
+    },
   ],
 };
 
@@ -196,49 +345,56 @@ export const testimonials = {
   items: [
     {
       client: client("Hotel Naveen"),
-      quote: "Working with Inspire Media has helped us improve our online presence and showcase our hotel services more effectively. Their creative approach and professional support are appreciated.",
+      quote:
+        "Working with Inspire Media has helped us improve our online presence and showcase our hotel services more effectively. Their creative approach and professional support are appreciated.",
       name: "",
       role: "",
       rating: 0,
     },
     {
       client: client("SVT"),
-      quote: "Inspire Media brings fresh ideas to digital marketing and brand promotion. Their content helps us present our products professionally and reach a wider audience.",
+      quote:
+        "Inspire Media brings fresh ideas to digital marketing and brand promotion. Their content helps us present our products professionally and reach a wider audience.",
       name: "",
       role: "",
       rating: 0,
     },
     {
       client: client("Parge"),
-      quote: "The team understands how to present our construction projects professionally online. Their creative work and marketing approach help us strengthen our digital presence.",
+      quote:
+        "The team understands how to present our construction projects professionally online. Their creative work and marketing approach help us strengthen our digital presence.",
       name: "",
       role: "",
       rating: 0,
     },
     {
       client: client("SLS"),
-      quote: "Inspire Media has helped us explore better ways to promote our cricket academy online. Their creative content makes it easier to showcase our training and activities.",
+      quote:
+        "Inspire Media has helped us explore better ways to promote our cricket academy online. Their creative content makes it easier to showcase our training and activities.",
       name: "",
       role: "",
       rating: 0,
     },
     {
       client: client("Ganesh"),
-      quote: "Their approach to digital marketing and property promotion is impressive. The team focuses on presenting our projects professionally and improving our online visibility.",
+      quote:
+        "Their approach to digital marketing and property promotion is impressive. The team focuses on presenting our projects professionally and improving our online visibility.",
       name: "",
       role: "",
       rating: 0,
     },
     {
       client: client("Kreedangana"),
-      quote: "Inspire Media offers creative ideas for promoting sports activities and events. Their professional approach helps us communicate our services more effectively online.",
+      quote:
+        "Inspire Media offers creative ideas for promoting sports activities and events. Their professional approach helps us communicate our services more effectively online.",
       name: "",
       role: "",
       rating: 0,
     },
     {
       client: client("Cotton"),
-      quote: "The team brings a fresh perspective to online promotion and brand communication. Their creative approach helps us showcase our club and activities in an appealing way.",
+      quote:
+        "The team brings a fresh perspective to online promotion and brand communication. Their creative approach helps us showcase our club and activities in an appealing way.",
       name: "",
       role: "",
       rating: 0,
@@ -260,28 +416,58 @@ export const crew = {
   body: "Every bold idea starts with people who see possibilities differently. From strategy and storytelling to design and digital, our crew brings curiosity, craft and commitment to every brand we grow.",
   members: [
     {
-      name: "", role: "Founder & CEO", photo: "/crew/crew-1.jpg", w: 800, h: 1000,
-      statement: "Every brand has a story worth growing. I built Inspire Media to make sure the right people hear it.",
+      name: "",
+      role: "Founder & CEO",
+      photo: "/crew/crew-1.jpg",
+      w: 800,
+      h: 1000,
+      statement:
+        "Every brand has a story worth growing. I built Inspire Media to make sure the right people hear it.",
     },
     {
-      name: "", role: "", photo: "/crew/crew-2.jpg", w: 900, h: 1125,
-      statement: "We work with passion, and it shows in every post, every campaign and every result.",
+      name: "",
+      role: "",
+      photo: "/crew/crew-2.jpg",
+      w: 900,
+      h: 1125,
+      statement:
+        "We work with passion, and it shows in every post, every campaign and every result.",
     },
     {
-      name: "", role: "", photo: "/crew/crew-3.jpg", w: 860, h: 1075,
-      statement: "Ideas are a start. Execution is everything. I care about the details that make work land.",
+      name: "",
+      role: "",
+      photo: "/crew/crew-3.jpg",
+      w: 860,
+      h: 1075,
+      statement:
+        "Ideas are a start. Execution is everything. I care about the details that make work land.",
     },
     {
-      name: "", role: "", photo: "/crew/crew-4.jpg", w: 900, h: 1125,
-      statement: "Creativity with a purpose: content that looks good and moves the numbers.",
+      name: "",
+      role: "",
+      photo: "/crew/crew-4.jpg",
+      w: 900,
+      h: 1125,
+      statement:
+        "Creativity with a purpose: content that looks good and moves the numbers.",
     },
     {
-      name: "", role: "", photo: "/crew/crew-5.jpg", w: 900, h: 1125,
-      statement: "Behind every great campaign is a clear plan. I make sure ours is ready before we spend a rupee.",
+      name: "",
+      role: "",
+      photo: "/crew/crew-5.jpg",
+      w: 900,
+      h: 1125,
+      statement:
+        "Behind every great campaign is a clear plan. I make sure ours is ready before we spend a rupee.",
     },
     {
-      name: "", role: "", photo: "/crew/crew-6.jpg", w: 720, h: 900,
-      statement: "The best stories are told with honesty, consistency and a little bit of fun.",
+      name: "",
+      role: "",
+      photo: "/crew/crew-6.jpg",
+      w: 720,
+      h: 900,
+      statement:
+        "The best stories are told with honesty, consistency and a little bit of fun.",
     },
   ],
 };
@@ -297,12 +483,36 @@ export const serviceList = {
   title: "Services, crafted for [growth]",
   body: "Six disciplines under one roof — planned together, measured together and delivered by one team that knows your brand.",
   items: [
-    { title: "Digital Marketing", line: "One plan across search, social and ads", formValue: "Full-funnel growth" },
-    { title: "Performance Ads", line: "Campaigns measured by return, not reach", formValue: "Paid Ads" },
-    { title: "Meta Ads", line: "Facebook and Instagram campaigns that convert", formValue: "Paid Ads" },
-    { title: "Google Ads", line: "Search, display and YouTube, built to convert", formValue: "Paid Ads" },
-    { title: "Creative Content", line: "Reels, posts and stories with a purpose", formValue: "Creative Content" },
-    { title: "Website Development", line: "Fast, mobile-first websites and landing pages", formValue: "Website Development" },
+    {
+      title: "Digital Marketing",
+      line: "One plan across search, social and ads",
+      formValue: "Full-funnel growth",
+    },
+    {
+      title: "Performance Ads",
+      line: "Campaigns measured by return, not reach",
+      formValue: "Paid Ads",
+    },
+    {
+      title: "Meta Ads",
+      line: "Facebook and Instagram campaigns that convert",
+      formValue: "Paid Ads",
+    },
+    {
+      title: "Google Ads",
+      line: "Search, display and YouTube, built to convert",
+      formValue: "Paid Ads",
+    },
+    {
+      title: "Creative Content",
+      line: "Reels, posts and stories with a purpose",
+      formValue: "Creative Content",
+    },
+    {
+      title: "Website Development",
+      line: "Fast, mobile-first websites and landing pages",
+      formValue: "Website Development",
+    },
   ],
   /** Separate line under the list that opens its own landing page. */
   feature: {
@@ -319,7 +529,8 @@ export const serviceList = {
  */
 export const political = {
   metaTitle: "Political Campaigns",
-  metaDescription: "Political campaign strategy, communication and public outreach by Inspire Media, Hubli.",
+  metaDescription:
+    "Political campaign strategy, communication and public outreach by Inspire Media, Hubli.",
   eyebrow: "Political campaigns",
   title: "Campaigns that connect with [people]",
   body: "Content coming soon — this page will explain how Inspire Media plans and runs political campaigns and public communication.",
@@ -343,26 +554,93 @@ export const designWork = {
   body: "Festive campaigns, offers, product launches and event creatives — designed in-house for the brands we grow.",
   hint: "Tap a design to view it",
   /** Words rolling inside the black tiles. */
-  words: ["Social posts", "Festive creatives", "Ad creatives", "Offers", "Product launches", "Event posters", "Branding", "Regional campaigns"],
+  words: [
+    "Social posts",
+    "Festive creatives",
+    "Ad creatives",
+    "Offers",
+    "Product launches",
+    "Event posters",
+    "Branding",
+    "Regional campaigns",
+  ],
   /** Seconds for one full loop of the strip (lower = faster). */
   loopSeconds: 60,
   tiles: [
-    { src: "/designs/design-02.jpg", w: 720, h: 900, alt: "SVT Gold Teacher's Day social post" },
-    { src: "/designs/design-01.jpg", w: 900, h: 900, alt: "Mira Silver Jewellery Kerala Kundan necklace post" },
-    { src: "/designs/design-09.jpg", w: 720, h: 900, alt: "Ganesh Promoters Dasara plot offer creative" },
-    { src: "/designs/design-04.jpg", w: 506, h: 900, alt: "SLS Cricket Academy Renegades Cup results story" },
+    {
+      src: "/designs/design-02.jpg",
+      w: 720,
+      h: 900,
+      alt: "SVT Gold Teacher's Day social post",
+    },
+    {
+      src: "/designs/design-01.jpg",
+      w: 900,
+      h: 900,
+      alt: "Mira Silver Jewellery Kerala Kundan necklace post",
+    },
+    {
+      src: "/designs/design-09.jpg",
+      w: 720,
+      h: 900,
+      alt: "Ganesh Promoters Dasara plot offer creative",
+    },
+    {
+      src: "/designs/design-04.jpg",
+      w: 506,
+      h: 900,
+      alt: "SLS Cricket Academy Renegades Cup results story",
+    },
     { word: true },
-    { src: "/designs/design-07.jpg", w: 720, h: 900, alt: "Murshilli's Hubballi Avalakki product ad" },
-    { src: "/designs/design-11.jpg", w: 720, h: 900, alt: "Mira Silver Jewellery discount offer creative" },
-    { src: "/designs/design-05.jpg", w: 720, h: 900, alt: "SVN Gold Buyers Kannada gold value ad" },
-    { src: "/designs/design-03.jpg", w: 720, h: 900, alt: "SVT Gold refined oil Kannada ad" },
-    { src: "/designs/design-13.jpg", w: 720, h: 900, alt: "Mira Silver Jewellery Maha Shivratri post" },
-    { src: "/designs/design-10.jpg", w: 720, h: 900, alt: "Ganesh Promoters site price offer creative" },
+    {
+      src: "/designs/design-11.jpg",
+      w: 720,
+      h: 900,
+      alt: "Mira Silver Jewellery discount offer creative",
+    },
+    {
+      src: "/designs/design-05.jpg",
+      w: 720,
+      h: 900,
+      alt: "SVN Gold Buyers Kannada gold value ad",
+    },
+    {
+      src: "/designs/design-03.jpg",
+      w: 720,
+      h: 900,
+      alt: "SVT Gold refined oil Kannada ad",
+    },
+    {
+      src: "/designs/design-13.jpg",
+      w: 720,
+      h: 900,
+      alt: "Mira Silver Jewellery Maha Shivratri post",
+    },
+    {
+      src: "/designs/design-10.jpg",
+      w: 720,
+      h: 900,
+      alt: "Ganesh Promoters site price offer creative",
+    },
     { word: true },
-    { src: "/designs/design-12.jpg", w: 720, h: 900, alt: "Mira Silver Jewellery Shivaji Jayanti post" },
-    { src: "/designs/design-06.jpg", w: 506, h: 900, alt: "INCOMEX 2026 exhibition story for Hubli Shamiyana Suppliers" },
-    { src: "/designs/design-08.jpg", w: 720, h: 900, alt: "Murshilli's three poha varieties product post" },
-    { src: "/designs/design-14.jpg", w: 900, h: 900, alt: "Mira Silver Jewellery necklace product shot" },
+    {
+      src: "/designs/design-12.jpg",
+      w: 720,
+      h: 900,
+      alt: "Mira Silver Jewellery Shivaji Jayanti post",
+    },
+    {
+      src: "/designs/design-06.jpg",
+      w: 506,
+      h: 900,
+      alt: "INCOMEX 2026 exhibition story for Hubli Shamiyana Suppliers",
+    },
+    {
+      src: "/designs/design-14.jpg",
+      w: 900,
+      h: 900,
+      alt: "Mira Silver Jewellery necklace product shot",
+    },
   ],
 };
 
@@ -377,16 +655,75 @@ export const industries = {
   title: "Every industry. [One growth partner.]",
   body: "From local favourites to fast-growing brands — if you have customers to reach, we can help you grow. These are a few of the industries we already work with.",
   sectors: [
-    { title: "Real Estate & Construction", clients: ["Ganesh", "Parge", "Nawani"], names: [], work: ["Plot & offer creatives", "Property reels", "Lead campaigns"] },
-    { title: "Hospitality & Events", clients: ["Hotel Naveen", "Cotton", "Sri Srinivasa", "Hubli Shamiyana"], names: [], work: ["Venue reels", "Event creatives", "Instagram growth"] },
-    { title: "Sports & Academies", clients: ["Kreedangana", "SLS"], names: [], work: ["Match results posts", "Event reels", "Admissions campaigns"] },
-    { title: "Food & FMCG", clients: ["SVT", "Hubballi Avalakki", "Mumbai"], names: [], work: ["Product ads", "Festive posts", "Regional campaigns"] },
-    { title: "Jewellery & Gold", clients: ["MIRA"], names: ["SVN Gold Buyers"], work: ["Product shoots & posts", "Festive offers", "Kannada ad creatives"] },
-    { title: "Health & Wellness", clients: ["Divine"], names: [], work: ["Brand storytelling", "Social content", "Awareness campaigns"] },
-    { title: "Public Sector", clients: ["Hubli-Dharwad"], names: [], work: ["Public awareness content", "Campaign creatives", "Event coverage"] },
+    {
+      title: "Real Estate & Construction",
+      clients: ["Ganesh", "Parge", "Nawani"],
+      names: [],
+      work: ["Plot & offer creatives", "Property reels", "Lead campaigns"],
+    },
+    {
+      title: "Hospitality & Events",
+      clients: ["Hotel Naveen", "Cotton", "Sri Srinivasa", "Hubli Shamiyana"],
+      names: [],
+      work: ["Venue reels", "Event creatives", "Instagram growth"],
+    },
+    {
+      title: "Sports & Academies",
+      clients: ["Kreedangana", "SLS"],
+      names: [],
+      work: ["Match results posts", "Event reels", "Admissions campaigns"],
+    },
+    {
+      title: "Food & FMCG",
+      clients: ["SVT", "Mumbai"],
+      names: [],
+      work: ["Product ads", "Festive posts", "Regional campaigns"],
+    },
+    {
+      title: "Jewellery & Gold",
+      clients: ["MIRA"],
+      names: ["SVN Gold Buyers"],
+      work: [
+        "Product shoots & posts",
+        "Festive offers",
+        "Kannada ad creatives",
+      ],
+    },
+    {
+      title: "Health & Wellness",
+      clients: ["Divine"],
+      names: [],
+      work: ["Brand storytelling", "Social content", "Awareness campaigns"],
+    },
+    {
+      title: "Public Sector",
+      clients: ["Hubli-Dharwad"],
+      names: [],
+      work: [
+        "Public awareness content",
+        "Campaign creatives",
+        "Event coverage",
+      ],
+    },
   ],
-  more: ["Healthcare", "Education", "Retail", "Fashion & Lifestyle", "Beauty & Wellness", "Automotive", "D2C & E-commerce", "Restaurants & Cafés", "Startups", "Manufacturing", "Travel"],
-  cta: { title: "Don’t see your industry?", body: "Every industry is welcome. Tell us about your business and we’ll show you how we’d grow it.", label: "Talk to us" },
+  more: [
+    "Healthcare",
+    "Education",
+    "Retail",
+    "Fashion & Lifestyle",
+    "Beauty & Wellness",
+    "Automotive",
+    "D2C & E-commerce",
+    "Restaurants & Cafés",
+    "Startups",
+    "Manufacturing",
+    "Travel",
+  ],
+  cta: {
+    title: "Don’t see your industry?",
+    body: "Every industry is welcome. Tell us about your business and we’ll show you how we’d grow it.",
+    label: "Talk to us",
+  },
 };
 
 /**
@@ -400,12 +737,30 @@ export const compare = {
   them: "Typical agency",
   us: "Inspire Media",
   rows: [
-    { them: "Separate freelancers for ads, design and SEO", us: "One team for strategy, content, ads and SEO" },
-    { them: "The same template for every client", us: "A custom roadmap for your goals and budget" },
-    { them: "Posting for likes and followers", us: "Content built to bring enquiries and sales" },
-    { them: "Reports full of jargon", us: "Clear, data-driven reports — every rupee accountable" },
-    { them: "Set it up and forget it", us: "Creatives, audiences and funnels tested and improved continuously" },
-    { them: "Rankings and reach as the goal", us: "Growth measured by real business results" },
+    {
+      them: "Separate freelancers for ads, design and SEO",
+      us: "One team for strategy, content, ads and SEO",
+    },
+    {
+      them: "The same template for every client",
+      us: "A custom roadmap for your goals and budget",
+    },
+    {
+      them: "Posting for likes and followers",
+      us: "Content built to bring enquiries and sales",
+    },
+    {
+      them: "Reports full of jargon",
+      us: "Clear, data-driven reports — every rupee accountable",
+    },
+    {
+      them: "Set it up and forget it",
+      us: "Creatives, audiences and funnels tested and improved continuously",
+    },
+    {
+      them: "Rankings and reach as the goal",
+      us: "Growth measured by real business results",
+    },
   ],
   cta: "Book a free strategy call",
 };
@@ -468,10 +823,22 @@ export const faq = {
 };
 
 export const processSteps = [
-  { title: "Audit", body: "We analyse your current marketing, competitors and market opportunities." },
-  { title: "Strategy", body: "We build a custom roadmap tailored to your brand goals and budget." },
-  { title: "Execute", body: "We launch and manage campaigns, content and SEO with precision." },
-  { title: "Scale", body: "We optimise continuously, double down on what works and scale results." },
+  {
+    title: "Audit",
+    body: "We analyse your current marketing, competitors and market opportunities.",
+  },
+  {
+    title: "Strategy",
+    body: "We build a custom roadmap tailored to your brand goals and budget.",
+  },
+  {
+    title: "Execute",
+    body: "We launch and manage campaigns, content and SEO with precision.",
+  },
+  {
+    title: "Scale",
+    body: "We optimise continuously, double down on what works and scale results.",
+  },
 ] as const;
 
 /**
@@ -480,7 +847,7 @@ export const processSteps = [
  */
 /**
  * "Social Media Content That Drives Growth" — a moving strip of reels (between About and Our approach).
- * Videos live in public/reels/ (reel-1.mp4 … reel-7.mp4).
+ * Videos live in public/reels/ (reel-1.mp4 … reel-12.mp4).
  *   poster — optional cover image (e.g. "/reels/reel-1.jpg"). Leave "" to use the video's first frame.
  *   title / tag — short labels shown on each card (edit freely).
  * To add a reel: put reel-8.mp4 in public/reels/ and add a line below.
@@ -493,18 +860,60 @@ export const socialReels = {
   /** Seconds for one full loop of the strip (lower = faster). */
   loopSeconds: 45,
   reels: [
-    { video: "/reels/reel-1.mp4", poster: "/reels/reel-1.jpg", title: "Cricket academy", tag: "Sports" },
-    { video: "/reels/reel-2.mp4", poster: "/reels/reel-2.jpg", title: "Sports event", tag: "Sports" },
-    { video: "/reels/reel-3.mp4", poster: "/reels/reel-3.jpg", title: "Build within budget", tag: "Construction" },
-    { video: "/reels/reel-4.mp4", poster: "/reels/reel-4.jpg", title: "Event venue", tag: "Events" },
-    { video: "/reels/reel-5.mp4", poster: "/reels/reel-5.jpg", title: "Plots in Hubballi", tag: "Real estate" },
-    { video: "/reels/reel-6.mp4", poster: "/reels/reel-6.jpg", title: "Property listings", tag: "Real estate" },
-    { video: "/reels/reel-7.mp4", poster: "/reels/reel-7.jpg", title: "Showroom walkthrough", tag: "Retail" },
-        { video: "/reels/reel-8.mp4", poster: "/reels/reel-8.jpg", title: "SVT Gold Diwali", tag: "Festive" },
-    { video: "/reels/reel-9.mp4", poster: "/reels/reel-9.jpg", title: "Mumbai's Diwali sweets", tag: "Festive" },
-    { video: "/reels/reel-10.mp4", poster: "/reels/reel-10.jpg", title: "Hubballi Avalakki", tag: "Food" },
-    { video: "/reels/reel-11.mp4", poster: "/reels/reel-11.jpg", title: "Mumbai's Potato Chips", tag: "Food" },
-    { video: "/reels/reel-12.mp4", poster: "/reels/reel-12.jpg", title: "Inspire Media showreel", tag: "Brand" },
+    {
+      video: "/reels/reel-3.mp4",
+      poster: "/reels/reel-3.jpg",
+      title: "Build within budget",
+      tag: "Construction",
+    },
+    {
+      video: "/reels/reel-4.mp4",
+      poster: "/reels/reel-4.jpg",
+      title: "Event venue",
+      tag: "Events",
+    },
+    {
+      video: "/reels/reel-5.mp4",
+      poster: "/reels/reel-5.jpg",
+      title: "Plots in Hubballi",
+      tag: "Real estate",
+    },
+    {
+      video: "/reels/reel-6.mp4",
+      poster: "/reels/reel-6.jpg",
+      title: "Property listings",
+      tag: "Real estate",
+    },
+    {
+      video: "/reels/reel-7.mp4",
+      poster: "/reels/reel-7.jpg",
+      title: "Showroom walkthrough",
+      tag: "Retail",
+    },
+    {
+      video: "/reels/reel-8.mp4",
+      poster: "/reels/reel-8.jpg",
+      title: "SVT Gold Diwali",
+      tag: "Festive",
+    },
+    {
+      video: "/reels/reel-9.mp4",
+      poster: "/reels/reel-9.jpg",
+      title: "Mumbai's Diwali sweets",
+      tag: "Festive",
+    },
+    {
+      video: "/reels/reel-11.mp4",
+      poster: "/reels/reel-11.jpg",
+      title: "Mumbai's Potato Chips",
+      tag: "Food",
+    },
+    {
+      video: "/reels/reel-12.mp4",
+      poster: "/reels/reel-12.jpg",
+      title: "Inspire Media showreel",
+      tag: "Brand",
+    },
   ],
 };
 
@@ -516,20 +925,51 @@ export const journey = {
   body: "We don’t start with a template. We listen before we launch, plan before we spend and measure before we scale — eight deliberate steps that turn your brand’s potential into growth you can see.",
   hint: "Drag or click to move through the journey",
   phases: [
-    { title: "Discover", body: "Get to know your brand, your customers and what growth means to you." },
-    { title: "Audit", body: "Analyse your current marketing, competitors and market opportunities." },
-    { title: "Strategy", body: "Build a custom roadmap tailored to your brand goals and budget." },
-    { title: "Create", body: "Craft the content and creative that make people stop, watch and act." },
-    { title: "Launch", body: "Go live with campaigns, content and SEO — set up with precision." },
-    { title: "Optimise", body: "Test, learn and refine every week based on real performance data." },
-    { title: "Report", body: "Transparent, data-driven reporting — every rupee accountable." },
-    { title: "Scale", body: "Double down on what works and scale the results." },
+    {
+      title: "Discover",
+      body: "Get to know your brand, your customers and what growth means to you.",
+    },
+    {
+      title: "Audit",
+      body: "Analyse your current marketing, competitors and market opportunities.",
+    },
+    {
+      title: "Strategy",
+      body: "Build a custom roadmap tailored to your brand goals and budget.",
+    },
+    {
+      title: "Create",
+      body: "Craft the content and creative that make people stop, watch and act.",
+    },
+    {
+      title: "Launch",
+      body: "Go live with campaigns, content and SEO — set up with precision.",
+    },
+    {
+      title: "Optimise",
+      body: "Test, learn and refine every week based on real performance data.",
+    },
+    {
+      title: "Report",
+      body: "Transparent, data-driven reporting — every rupee accountable.",
+    },
+    {
+      title: "Scale",
+      body: "Double down on what works and scale the results.",
+    },
   ],
 } as const;
 
 /** Options for the lead forms. Budget ranges are placeholders — edit to suit. */
 export const leadOptions = {
-  services: ["SEO", "Paid Ads", "Creative Content", "Website Development", "Political Campaigns", "Full-funnel growth"],
+  services: [
+    "SEO",
+    "Paid Ads",
+    "Creative Content",
+    "Website Development",
+    "Political Campaigns",
+    "Full-funnel growth",
+  ],
   industries: [
     "D2C / E-commerce",
     "Retail & Stores",
@@ -543,9 +983,35 @@ export const leadOptions = {
     "Other",
   ],
   /** Suggestions for the popup's city field (any city can still be typed). */
-  cities: ["Hubli", "Dharwad", "Belagavi", "Bengaluru", "Mysuru", "Mangaluru", "Davanagere", "Kalaburagi", "Ballari", "Vijayapura", "Shivamogga", "Udupi", "Mumbai", "Pune", "Hyderabad", "Chennai", "Goa", "Delhi"],
-  budgets: ["Under ₹50,000", "₹50,000 – ₹1,00,000", "₹1,00,000 – ₹3,00,000", "Above ₹3,00,000"],
+  cities: [
+    "Hubli",
+    "Dharwad",
+    "Belagavi",
+    "Bengaluru",
+    "Mysuru",
+    "Mangaluru",
+    "Davanagere",
+    "Kalaburagi",
+    "Ballari",
+    "Vijayapura",
+    "Shivamogga",
+    "Udupi",
+    "Mumbai",
+    "Pune",
+    "Hyderabad",
+    "Chennai",
+    "Goa",
+    "Delhi",
+  ],
+  budgets: [
+    "Under ₹50,000",
+    "₹50,000 – ₹1,00,000",
+    "₹1,00,000 – ₹3,00,000",
+    "Above ₹3,00,000",
+  ],
 } as const;
 
-export const whatsappUrl = (message = "Hi Inspire Media, I'd like to book a strategy call.") =>
+export const whatsappUrl = (
+  message = "Hi Inspire Media, I'd like to book a strategy call.",
+) =>
   `https://wa.me/${site.contact.primaryPhone.whatsapp}?text=${encodeURIComponent(message)}`;
